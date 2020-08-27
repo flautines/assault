@@ -1,0 +1,356 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"return",
+				"get_return"
+			],
+			[
+				"manEntityF",
+				"manEntityForAllMatching\tvoid manEntityForAllMatching(void (*pfunUpdateEntity)(Entity_t *), u8 signature)"
+			],
+			[
+				"sysPhy",
+				"sysPhysicsCheckKeyboard"
+			],
+			[
+				"sysPh",
+				"sysPhysicsUpdateEntity"
+			],
+			[
+				"Q_",
+				"Q_PUBL"
+			],
+			[
+				"E",
+				"E_TYPE_DEAD\tE_TYPE_DEAD"
+			],
+			[
+				"cpct_ran",
+				"cpct_rand8\tcpct_rand8"
+			],
+			[
+				"cpct_hal",
+				"cpctm_produceHalts\tcpctm_produceHalts(N)"
+			],
+			[
+				"m_",
+				"m_entities_end\tEntity_t * m_entities_end"
+			],
+			[
+				"E_",
+				"E_TYPE_DEAD\tenum <anonymous> E_TYPE_DEAD"
+			],
+			[
+				"CPCT",
+				"CPCT_VMEM_START\tCPCT_VMEM_START"
+			],
+			[
+				"DEAD",
+				"E_TYPE_DEAD\tenum <anonymous> E_TYPE_DEAD"
+			],
+			[
+				"manEnti",
+				"manEntityGetFree\tu8 manEntityGetFree()"
+			],
+			[
+				"pvm",
+				"pvmem_prev\tu8 * pvmem_prev"
+			],
+			[
+				"E_TYPE",
+				"E_TYPE_INVALID\tE_TYPE_INVALID"
+			],
+			[
+				"sysRender",
+				"sysRenderUpdateEntity\tvoid sysRenderUpdateEntity(Entity_t *e)"
+			],
+			[
+				"manEn",
+				"manEntityForAll\tvoid manEntityForAll(void (*pfun)(Entity_t *))"
+			],
+			[
+				"sysPhysi",
+				"sysPhysicsUpdateEntity\tvoid sysPhysicsUpdateEntity(int *e)"
+			],
+			[
+				"manEntity",
+				"manEntityCreate\tEntity_t * manEntityCreate()"
+			],
+			[
+				"cpct_",
+				"cpct_page80\tcpct_page80"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"clang",
+				"Clang Format: Select Style"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"remove",
+				"Package Control: Remove Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+	],
+	"file_history":
+	[
+		"/home/andriu/repos/linux/scripts/cdapp.sh",
+		"/home/andriu/repos/cpc/assault/src/man/entity.h",
+		"/home/andriu/repos/cpc/assault/src/man/game.c",
+		"/home/andriu/repos/cpc/assault/src/sys/ai.c",
+		"/home/andriu/.config/fontconfig/fonts.conf",
+		"/home/andriu/repos/cpc/assault/src/sys/ai.h",
+		"/home/andriu/repos/cpc/assault/src/sys/physics.c",
+		"/home/andriu/repos/cpc/assault/src/sys/render.c",
+		"/home/andriu/repos/cpc/assault/src/man/entity.c",
+		"/home/andriu/repos/cpc/assault/obj/sys/physics.rst",
+		"/home/andriu/repos/cpc/assault/obj/star.map",
+		"/home/andriu/repos/cpc/assault/obj/sys/physics.asm",
+		"/home/andriu/repos/linux/scripts/pomodoro.sh",
+		"/home/andriu/repos/linux/scripts/books.sh",
+		"/home/andriu/repos/cpc/dez80/p206.asm",
+		"/home/andriu/repos/cpc/dez80/p208.asm",
+		"/home/andriu/repos/cpc/dez80/p207.asm",
+		"/home/andriu/repos/linux/scripts/first.sh",
+		"/home/andriu/.config/termite/config",
+		"/home/andriu/.config/temite/config",
+		"/home/andriu/repos/linux/linux.sublime-project",
+		"/home/andriu/repos/cpc/star/src/man/entity.h",
+		"/home/andriu/repos/cpc/starfield/src/sys/generator.h",
+		"/home/andriu/repos/cpc/starfield/src/man/entity.h",
+		"/home/andriu/repos/cpc/starfield/src/sys/generator.c",
+		"/home/andriu/repos/cpc/star/src/sys/render.c",
+		"/home/andriu/repos/cpc/star/obj/star.map",
+		"/home/andriu/repos/cpc/star/src/sys/physics.c",
+		"/home/andriu/repos/cpc/star/src/sys/spawner.c",
+		"/home/andriu/repos/cpc/star/src/sys/spawner.h",
+		"/home/andriu/repos/cpc/starfield/src/sys/render.c",
+		"/home/andriu/repos/cpc/starfield/src/sys/physics.c",
+		"/home/andriu/repos/cpc/star/src/main.c",
+		"/home/andriu/repos/cpc/star/src/man/entity.c",
+		"/home/andriu/repos/cpc/star/obj/sys/render.rst",
+		"/home/andriu/repos/cpc/star/obj/sys/render.sym",
+		"/home/andriu/repos/cpc/starfield/src/man/entity.c",
+		"/home/andriu/repos/cpc/star/src/sys/render.h",
+		"/home/andriu/repos/cpc/star/obj/man/entity.asm",
+		"/home/andriu/repos/cpc/star/obj/sys/render.asm",
+		"/home/andriu/repos/cpc/star/src/sys/physics.h",
+		"/home/andriu/repos/cpc/star/obj/sys/physics.asm",
+		"/home/andriu/.config/sublime-text-3/Packages/Clang Format/clang_format.sublime-settings",
+		"/home/andriu/.config/sublime-text-3/Packages/User/clang_format.sublime-settings",
+		"/home/andriu/repos/cpc/starfield/src/main.c",
+		"/home/andriu/repos/cpc/starfield/obj/starfield.map",
+		"/home/andriu/repos/cpc/starfield/obj/sys/render.asm",
+		"/home/andriu/repos/cpc/starfield/obj/man/entity.rst",
+		"/home/andriu/repos/cpc/starfield/src/sys/render.h",
+		"/home/andriu/repos/cpc/starfield/obj/man/entity.asm",
+		"/home/andriu/repos/cpc/starfield/Makefile",
+		"/home/andriu/repos/cpc/starfield/obj/main.asm",
+		"/home/andriu/repos/cpc/starfield/obj/main.rst",
+		"/home/andriu/.config/sublime-text-3/Packages/Package Control/Package Control.sublime-settings",
+		"/home/andriu/repos/cpc/starfield/src/sys/physics.h",
+		"/home/andriu/repos/cpc/starfield/obj/man/entity.lst",
+		"/home/andriu/.xinitrc",
+		"/home/andriu/repos/cpc/starfield/obj/main.lst",
+		"/home/andriu/repos/cpc/dez80/dibuja_un_sprite.hex",
+		"/home/andriu/.config/polybar/config",
+		"/home/andriu/.config/polybar/launch.sh",
+		"/home/andriu/.config/i3/config",
+		"/home/andriu/.local/bin/setwacom.sh"
+	],
+	"find":
+	{
+		"height": 29.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"render",
+			"e->",
+			"e",
+			"_time",
+			"min",
+			"50 c0",
+			"#",
+			"min",
+			"read",
+			"d",
+			"m_entities_end",
+			"e->",
+			"WHITE",
+			"entities_end",
+			"dummy",
+			"e->pvmem_prev",
+			"e->",
+			"dead_e",
+			"last",
+			"modu",
+			"reserved_entities",
+			"mpd"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 29.0
+	},
+	"input":
+	{
+		"height": 42.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 139.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.mdpopups":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "assault.sublime-project",
+	"replace":
+	{
+		"height": 54.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/repos/cpc/cpc.sublime-workspace"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 156.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

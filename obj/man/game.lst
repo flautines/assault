@@ -1,0 +1,274 @@
+                              1 ;--------------------------------------------------------
+                              2 ; File Created by SDCC : free open source ANSI-C Compiler
+                              3 ; Version 3.6.8 #9946 (Linux)
+                              4 ;--------------------------------------------------------
+                              5 	.module game
+                              6 	.optsdcc -mz80
+                              7 	
+                              8 ;--------------------------------------------------------
+                              9 ; Public variables in this module
+                             10 ;--------------------------------------------------------
+                             11 	.globl _manGameCreateFromTemplate
+                             12 	.globl _wait
+                             13 	.globl _sysAIUpdate
+                             14 	.globl _sysRenderInit
+                             15 	.globl _sysRenderUpdate
+                             16 	.globl _sysPhysicsUpdate
+                             17 	.globl _manEntityUpdate
+                             18 	.globl _manEntityCreate
+                             19 	.globl _manEntityInit
+                             20 	.globl _cpct_waitVSYNC
+                             21 	.globl _cpct_waitHalts
+                             22 	.globl _cpct_memcpy
+                             23 	.globl _num_tmpl
+                             24 	.globl _jugador_tmpl
+                             25 	.globl _nave_marcador_tmpl
+                             26 	.globl _nave_nodriza_tmpl
+                             27 	.globl _manGameInit
+                             28 	.globl _manGamePlay
+                             29 ;--------------------------------------------------------
+                             30 ; special function registers
+                             31 ;--------------------------------------------------------
+                             32 ;--------------------------------------------------------
+                             33 ; ram data
+                             34 ;--------------------------------------------------------
+                             35 	.area _DATA
+                             36 ;--------------------------------------------------------
+                             37 ; ram data
+                             38 ;--------------------------------------------------------
+                             39 	.area _INITIALIZED
+                             40 ;--------------------------------------------------------
+                             41 ; absolute external ram data
+                             42 ;--------------------------------------------------------
+                             43 	.area _DABS (ABS)
+                             44 ;--------------------------------------------------------
+                             45 ; global & static initialisations
+                             46 ;--------------------------------------------------------
+                             47 	.area _HOME
+                             48 	.area _GSINIT
+                             49 	.area _GSFINAL
+                             50 	.area _GSINIT
+                             51 ;--------------------------------------------------------
+                             52 ; Home
+                             53 ;--------------------------------------------------------
+                             54 	.area _HOME
+                             55 	.area _HOME
+                             56 ;--------------------------------------------------------
+                             57 ; code
+                             58 ;--------------------------------------------------------
+                             59 	.area _CODE
+                             60 ;src/man/game.c:44: void wait(u8 n)
+                             61 ;	---------------------------------
+                             62 ; Function wait
+                             63 ; ---------------------------------
+   0000                      64 _wait::
+                             65 ;src/man/game.c:46: do {
+   0000 21 02 00      [10]   66 	ld	hl, #2+0
+   0003 39            [11]   67 	add	hl, sp
+   0004 4E            [ 7]   68 	ld	c, (hl)
+   0005                      69 00101$:
+                             70 ;src/man/game.c:47: cpct_waitHalts(n);
+   0005 C5            [11]   71 	push	bc
+   0006 69            [ 4]   72 	ld	l, c
+   0007 CDr00r00      [17]   73 	call	_cpct_waitHalts
+   000A CDr00r00      [17]   74 	call	_cpct_waitVSYNC
+   000D C1            [10]   75 	pop	bc
+                             76 ;src/man/game.c:49: } while (--n);
+   000E 0D            [ 4]   77 	dec c
+   000F 20 F4         [12]   78 	jr	NZ,00101$
+   0011 C9            [10]   79 	ret
+   0012                      80 _nave_nodriza_tmpl:
+   0012 0B                   81 	.db #0x0b	; 11
+   0013 26                   82 	.db #0x26	; 38
+   0014 12                   83 	.db #0x12	; 18
+   0015 12                   84 	.db #0x12	; 18
+   0016 10                   85 	.db #0x10	; 16
+   0017 FF                   86 	.db #0xff	; -1
+   0018 00                   87 	.db #0x00	;  0
+   0019r00r00                88 	.dw _spr_nave_nodriza
+   001B                      89 _nave_marcador_tmpl:
+   001B 01                   90 	.db #0x01	; 1
+   001C 00                   91 	.db #0x00	; 0
+   001D C0                   92 	.db #0xc0	; 192
+   001E 06                   93 	.db #0x06	; 6
+   001F 08                   94 	.db #0x08	; 8
+   0020 00                   95 	.db #0x00	;  0
+   0021 00                   96 	.db #0x00	;  0
+   0022r00r00                97 	.dw _spr_nave_jugador_1
+   0024                      98 _jugador_tmpl:
+   0024 07                   99 	.db #0x07	; 7
+   0025 26                  100 	.db #0x26	; 38
+   0026 B0                  101 	.db #0xb0	; 176
+   0027 06                  102 	.db #0x06	; 6
+   0028 08                  103 	.db #0x08	; 8
+   0029 00                  104 	.db #0x00	;  0
+   002A 00                  105 	.db #0x00	;  0
+   002Br00r00               106 	.dw _spr_nave_jugador_0
+   002D                     107 _num_tmpl:
+   002D 01                  108 	.db #0x01	; 1
+   002E 18                  109 	.db #0x18	; 24
+   002F 00                  110 	.db #0x00	; 0
+   0030 03                  111 	.db #0x03	; 3
+   0031 08                  112 	.db #0x08	; 8
+   0032 00                  113 	.db #0x00	;  0
+   0033 00                  114 	.db #0x00	;  0
+   0034r00r00               115 	.dw _spr_numeros_00
+                            116 ;src/man/game.c:52: Entity_t *manGameCreateFromTemplate(const Entity_t *tmpl)
+                            117 ;	---------------------------------
+                            118 ; Function manGameCreateFromTemplate
+                            119 ; ---------------------------------
+   0036                     120 _manGameCreateFromTemplate::
+   0036 DD E5         [15]  121 	push	ix
+   0038 DD 21 00 00   [14]  122 	ld	ix,#0
+   003C DD 39         [15]  123 	add	ix,sp
+                            124 ;src/man/game.c:54: Entity_t *e = manEntityCreate();
+   003E CDr00r00      [17]  125 	call	_manEntityCreate
+                            126 ;src/man/game.c:55: cpct_memcpy (e, tmpl, sizeof (Entity_t));
+   0041 DD 4E 04      [19]  127 	ld	c,4 (ix)
+   0044 DD 46 05      [19]  128 	ld	b,5 (ix)
+   0047 E5            [11]  129 	push	hl
+   0048 FD E1         [14]  130 	pop	iy
+   004A E5            [11]  131 	push	hl
+   004B 11 09 00      [10]  132 	ld	de, #0x0009
+   004E D5            [11]  133 	push	de
+   004F C5            [11]  134 	push	bc
+   0050 FD E5         [15]  135 	push	iy
+   0052 CDr00r00      [17]  136 	call	_cpct_memcpy
+   0055 E1            [10]  137 	pop	hl
+                            138 ;src/man/game.c:56: return e;    
+   0056 DD E1         [14]  139 	pop	ix
+   0058 C9            [10]  140 	ret
+                            141 ;src/man/game.c:59: void manGameInit()
+                            142 ;	---------------------------------
+                            143 ; Function manGameInit
+                            144 ; ---------------------------------
+   0059                     145 _manGameInit::
+   0059 DD E5         [15]  146 	push	ix
+   005B DD 21 00 00   [14]  147 	ld	ix,#0
+   005F DD 39         [15]  148 	add	ix,sp
+   0061 21 F4 FF      [10]  149 	ld	hl, #-12
+   0064 39            [11]  150 	add	hl, sp
+   0065 F9            [ 6]  151 	ld	sp, hl
+                            152 ;src/man/game.c:61: manEntityInit();
+   0066 CDr00r00      [17]  153 	call	_manEntityInit
+                            154 ;src/man/game.c:62: sysRenderInit();
+   0069 CDr00r00      [17]  155 	call	_sysRenderInit
+                            156 ;src/man/game.c:64: manGameCreateFromTemplate (&nave_nodriza_tmpl);
+   006C 21r12r00      [10]  157 	ld	hl, #_nave_nodriza_tmpl
+   006F E5            [11]  158 	push	hl
+   0070 CDr36r00      [17]  159 	call	_manGameCreateFromTemplate
+   0073 F1            [10]  160 	pop	af
+                            161 ;src/man/game.c:69: do {
+   0074 0E 1E         [ 7]  162 	ld	c, #0x1e
+   0076                     163 00101$:
+                            164 ;src/man/game.c:70: Entity_t *e = 
+   0076 C5            [11]  165 	push	bc
+   0077 21r1Br00      [10]  166 	ld	hl, #_nave_marcador_tmpl
+   007A E5            [11]  167 	push	hl
+   007B CDr36r00      [17]  168 	call	_manGameCreateFromTemplate
+   007E F1            [10]  169 	pop	af
+   007F C1            [10]  170 	pop	bc
+                            171 ;src/man/game.c:72: x -= 10;
+   0080 79            [ 4]  172 	ld	a, c
+   0081 C6 F6         [ 7]  173 	add	a, #0xf6
+   0083 4F            [ 4]  174 	ld	c, a
+                            175 ;src/man/game.c:73: e->x = x;
+   0084 23            [ 6]  176 	inc	hl
+   0085 71            [ 7]  177 	ld	(hl), c
+                            178 ;src/man/game.c:74: } while (x);
+   0086 79            [ 4]  179 	ld	a, c
+   0087 B7            [ 4]  180 	or	a, a
+   0088 20 EC         [12]  181 	jr	NZ,00101$
+                            182 ;src/man/game.c:77: manGameCreateFromTemplate(&jugador_tmpl);
+   008A 21r24r00      [10]  183 	ld	hl, #_jugador_tmpl
+   008D E5            [11]  184 	push	hl
+   008E CDr36r00      [17]  185 	call	_manGameCreateFromTemplate
+   0091 F1            [10]  186 	pop	af
+                            187 ;src/man/game.c:83: do {
+   0092 21 01 00      [10]  188 	ld	hl, #0x0001
+   0095 39            [11]  189 	add	hl, sp
+   0096 4D            [ 4]  190 	ld	c, l
+   0097 44            [ 4]  191 	ld	b, h
+   0098 DD 71 FE      [19]  192 	ld	-2 (ix), c
+   009B DD 70 FF      [19]  193 	ld	-1 (ix), b
+   009E DD 36 F4 06   [19]  194 	ld	-12 (ix), #0x06
+   00A2                     195 00104$:
+                            196 ;src/man/game.c:84: --d;        
+   00A2 DD 35 F4      [23]  197 	dec	-12 (ix)
+                            198 ;src/man/game.c:85: cpct_memcpy(&num, &num_tmpl, sizeof(Entity_t));      
+   00A5 59            [ 4]  199 	ld	e, c
+   00A6 50            [ 4]  200 	ld	d, b
+   00A7 C5            [11]  201 	push	bc
+   00A8 21 09 00      [10]  202 	ld	hl, #0x0009
+   00AB E5            [11]  203 	push	hl
+   00AC 21r2Dr00      [10]  204 	ld	hl, #_num_tmpl
+   00AF E5            [11]  205 	push	hl
+   00B0 D5            [11]  206 	push	de
+   00B1 CDr00r00      [17]  207 	call	_cpct_memcpy
+   00B4 C1            [10]  208 	pop	bc
+                            209 ;src/man/game.c:86: num.sprite += d * SPR_NUMEROS_00_H * SPR_NUMEROS_00_W;
+   00B5 FD 21 07 00   [14]  210 	ld	iy, #0x0007
+   00B9 FD 09         [15]  211 	add	iy, bc
+   00BB FD 5E 00      [19]  212 	ld	e, 0 (iy)
+   00BE FD 56 01      [19]  213 	ld	d, 1 (iy)
+   00C1 D5            [11]  214 	push	de
+   00C2 DD 5E F4      [19]  215 	ld	e,-12 (ix)
+   00C5 16 00         [ 7]  216 	ld	d,#0x00
+   00C7 6B            [ 4]  217 	ld	l, e
+   00C8 62            [ 4]  218 	ld	h, d
+   00C9 29            [11]  219 	add	hl, hl
+   00CA 19            [11]  220 	add	hl, de
+   00CB 29            [11]  221 	add	hl, hl
+   00CC 29            [11]  222 	add	hl, hl
+   00CD 29            [11]  223 	add	hl, hl
+   00CE D1            [10]  224 	pop	de
+   00CF 19            [11]  225 	add	hl, de
+   00D0 FD 75 00      [19]  226 	ld	0 (iy), l
+   00D3 FD 74 01      [19]  227 	ld	1 (iy), h
+                            228 ;src/man/game.c:87: num.x += d * (SPR_NUMEROS_00_W+2);
+   00D6 C5            [11]  229 	push	bc
+   00D7 FD E1         [14]  230 	pop	iy
+   00D9 FD 23         [10]  231 	inc	iy
+   00DB FD 56 00      [19]  232 	ld	d, 0 (iy)
+   00DE DD 6E F4      [19]  233 	ld	l, -12 (ix)
+   00E1 5D            [ 4]  234 	ld	e, l
+   00E2 29            [11]  235 	add	hl, hl
+   00E3 29            [11]  236 	add	hl, hl
+   00E4 19            [11]  237 	add	hl, de
+   00E5 7A            [ 4]  238 	ld	a, d
+   00E6 85            [ 4]  239 	add	a, l
+   00E7 FD 77 00      [19]  240 	ld	0 (iy), a
+                            241 ;src/man/game.c:88: manGameCreateFromTemplate(&num);
+   00EA DD 5E FE      [19]  242 	ld	e,-2 (ix)
+   00ED DD 56 FF      [19]  243 	ld	d,-1 (ix)
+   00F0 C5            [11]  244 	push	bc
+   00F1 D5            [11]  245 	push	de
+   00F2 CDr36r00      [17]  246 	call	_manGameCreateFromTemplate
+   00F5 F1            [10]  247 	pop	af
+   00F6 C1            [10]  248 	pop	bc
+                            249 ;src/man/game.c:90: } while (d);
+   00F7 DD 7E F4      [19]  250 	ld	a, -12 (ix)
+   00FA B7            [ 4]  251 	or	a, a
+   00FB 20 A5         [12]  252 	jr	NZ,00104$
+   00FD DD F9         [10]  253 	ld	sp, ix
+   00FF DD E1         [14]  254 	pop	ix
+   0101 C9            [10]  255 	ret
+                            256 ;src/man/game.c:96: void manGamePlay()
+                            257 ;	---------------------------------
+                            258 ; Function manGamePlay
+                            259 ; ---------------------------------
+   0102                     260 _manGamePlay::
+                            261 ;src/man/game.c:98: while (1) {
+   0102                     262 00102$:
+                            263 ;src/man/game.c:99: sysAIUpdate();
+   0102 CDr00r00      [17]  264 	call	_sysAIUpdate
+                            265 ;src/man/game.c:100: sysPhysicsUpdate();   
+   0105 CDr00r00      [17]  266 	call	_sysPhysicsUpdate
+                            267 ;src/man/game.c:101: sysRenderUpdate();
+   0108 CDr00r00      [17]  268 	call	_sysRenderUpdate
+                            269 ;src/man/game.c:102: manEntityUpdate();
+   010B CDr00r00      [17]  270 	call	_manEntityUpdate
+   010E 18 F2         [12]  271 	jr	00102$
+                            272 	.area _CODE
+                            273 	.area _INITIALIZER
+                            274 	.area _CABS (ABS)

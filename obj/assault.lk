@@ -1,0 +1,21 @@
+-mjwx
+-i obj/assault.ihx
+-b _CODE = 0x4000
+-b _DATA = 0x0000
+-u
+-k /home/andriu/cpctelera/cpctelera/tools/sdcc-3.6.8-r9946/bin/../share/sdcc/lib/z80
+-k /home/andriu/cpctelera/cpctelera/tools/sdcc-3.6.8-r9946/share/sdcc/lib/z80
+-l /home/andriu/cpctelera/cpctelera/cpctelera.lib
+-l z80
+obj/sprites/numeros.rel
+obj/sprites/nave_jugador.rel
+obj/sprites/nave_nodriza_01.rel
+obj/sprites/main_palette.rel
+obj/main.rel
+obj/man/entity.rel
+obj/man/game.rel
+obj/sys/ai.rel
+obj/sys/physics.rel
+obj/sys/render.rel
+
+-e
