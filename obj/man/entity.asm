@@ -30,7 +30,7 @@
 ;--------------------------------------------------------
 	.area _DATA
 _m_entities::
-	.ds 108
+	.ds 168
 _m_invalid::
 	.ds 1
 _m_next_free::
@@ -73,11 +73,11 @@ _manEntityInit::
 	ld	hl,#_m_invalid + 0
 	ld	(hl), #0x00
 ;src/man/entity.c:13: m_entities_end = m_entities + MAX_ENTITIES;
-	ld	hl, #0x006c
+	ld	hl, #0x00a8
 	add	hl, bc
 	ld	(_m_entities_end), hl
 ;src/man/entity.c:14: cpct_memset(m_next_free, 0, sizeof(m_entities));
-	ld	hl, #0x006c
+	ld	hl, #0x00a8
 	push	hl
 	xor	a, a
 	push	af
@@ -94,7 +94,7 @@ _manEntityCreate::
 ;src/man/entity.c:18: Entity_t *next = m_next_free;
 	ld	bc, (_m_next_free)
 ;src/man/entity.c:19: m_next_free = next + 1;
-	ld	hl, #0x0009
+	ld	hl, #0x000e
 	add	hl,bc
 	ld	(_m_next_free), hl
 ;src/man/entity.c:20: next->type = E_TYPE_DEFAULT;
@@ -104,7 +104,7 @@ _manEntityCreate::
 	ld	l, c
 	ld	h, b
 	ret
-;src/man/entity.c:24: void manEntityForAll(void (*pfunUpdateEntity)(Entity_t *)) {
+;src/man/entity.c:24: void manEntityForAll(UpdateEntityFn_t fnUpdateEntity) {
 ;	---------------------------------
 ; Function manEntityForAll
 ; ---------------------------------
@@ -116,10 +116,10 @@ _manEntityForAll::
 	ld	a, (bc)
 	or	a, a
 	ret	Z
-;src/man/entity.c:27: pfunUpdateEntity(e++);
+;src/man/entity.c:27: fnUpdateEntity(e++);
 	ld	e, c
 	ld	d, b
-	ld	hl, #0x0009
+	ld	hl, #0x000e
 	add	hl,bc
 	push	hl
 	push	de
@@ -153,7 +153,7 @@ _manEntityForAllMatching::
 	ld	a, 0 (iy)
 	sub	a, e
 	jr	NZ,00102$
-;src/man/entity.c:38: pfunUpdateEntity(e);
+;src/man/entity.c:38: fnUpdateEntity(e);
 	push	bc
 	push	bc
 	ld	hl, #6
@@ -167,7 +167,7 @@ _manEntityForAllMatching::
 	pop	bc
 00102$:
 ;src/man/entity.c:39: e++;
-	ld	hl, #0x0009
+	ld	hl, #0x000e
 	add	hl,bc
 	ld	c, l
 	ld	b, h
@@ -186,7 +186,7 @@ _manEntityDestroy::
 ;src/man/entity.c:46: --m_next_free;
 	ld	hl, #_m_next_free
 	ld	a, (hl)
-	add	a, #0xf7
+	add	a, #0xf2
 	ld	(hl), a
 	inc	hl
 	ld	a, (hl)
@@ -203,7 +203,7 @@ _manEntityDestroy::
 00109$:
 ;src/man/entity.c:49: cpct_memcpy(dead_e, m_next_free, sizeof(Entity_t));
 	ld	hl, (_m_next_free)
-	ld	de, #0x0009
+	ld	de, #0x000e
 	push	de
 	push	hl
 	push	bc
@@ -252,7 +252,7 @@ _manEntityUpdate::
 	jr	00104$
 00102$:
 ;src/man/entity.c:67: ++e;
-	ld	bc, #0x0009
+	ld	bc, #0x000e
 	add	hl, bc
 	jr	00104$
 ;src/man/entity.c:72: u8 manEntityAvailable()

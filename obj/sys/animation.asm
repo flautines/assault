@@ -2,18 +2,15 @@
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.6.8 #9946 (Linux)
 ;--------------------------------------------------------
-	.module ai
+	.module animation
 	.optsdcc -mz80
 	
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _sysAIUpdateEntity
-	.globl _manGameCreateEnemy
+	.globl _sysAnimationUpdate
+	.globl _sysAnimationUpdateEntity
 	.globl _manEntityForAllMatching
-	.globl _sysAIBehaviorLeftRight
-	.globl _sysAIBehaviorMotherShip
-	.globl _sysAIUpdate
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -45,109 +42,119 @@
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/sys/ai.c:6: void sysAIBehaviorLeftRight(Entity_t *e)
+;src/sys/animation.c:3: void sysAnimationUpdateEntity(Entity_t *e)
 ;	---------------------------------
-; Function sysAIBehaviorLeftRight
+; Function sysAnimationUpdateEntity
 ; ---------------------------------
-_sysAIBehaviorLeftRight::
+_sysAnimationUpdateEntity::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;src/sys/ai.c:8: const u8 rbound = 80 - e->w;
+	ld	hl, #-6
+	add	hl, sp
+	ld	sp, hl
+;src/sys/animation.c:6: if ( --(e->anim_counter) == 0 ) {
 	ld	c,4 (ix)
 	ld	b,5 (ix)
-	ld	l, c
-	ld	h, b
-	inc	hl
-	inc	hl
-	inc	hl
+	ld	hl, #0x000d
+	add	hl,bc
+	ld	-2 (ix), l
+	ld	-1 (ix), h
 	ld	e, (hl)
-	ld	a, #0x50
-	sub	a, e
-	ld	e, a
-;src/sys/ai.c:9: if (e->x == 0)      e->vx =  1;
-	push	bc
-	pop	iy
-	inc	iy
-	ld	l, 0 (iy)
-	inc	bc
-	inc	bc
-	inc	bc
-	inc	bc
-	inc	bc
-	ld	a, l
+	dec	e
+	ld	l,-2 (ix)
+	ld	h,-1 (ix)
+	ld	(hl), e
+	ld	a, e
 	or	a, a
-	jr	NZ,00102$
-	ld	a, #0x01
-	ld	(bc), a
-00102$:
-;src/sys/ai.c:10: if (e->x == rbound) e->vx = -1;
-	ld	a, 0 (iy)
-	sub	a, e
 	jr	NZ,00105$
-	ld	a, #0xff
-	ld	(bc), a
-00105$:
-	pop	ix
-	ret
-;src/sys/ai.c:12: void sysAIBehaviorMotherShip(Entity_t *e)
-;	---------------------------------
-; Function sysAIBehaviorMotherShip
-; ---------------------------------
-_sysAIBehaviorMotherShip::
-;src/sys/ai.c:14: if (e->x == 20) {
-	pop	de
-	pop	bc
-	push	bc
-	push	de
-	ld	l, c
-	ld	h, b
+;src/sys/animation.c:7: ++e->anim;
+	ld	hl, #0x000b
+	add	hl,bc
+	ex	(sp), hl
+	pop	hl
+	push	hl
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	inc	de
+	inc	de
+	inc	de
+	pop	hl
+	push	hl
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
+;src/sys/animation.c:9: if ( e->anim->time == 0) {
+	pop	hl
+	push	hl
+	ld	a, (hl)
+	ld	-4 (ix), a
 	inc	hl
 	ld	a, (hl)
-	sub	a, #0x14
+	ld	-3 (ix), a
+	ld	a, (de)
+	or	a, a
 	jr	NZ,00102$
-;src/sys/ai.c:15: manGameCreateEnemy (e);
-	push	bc
-	push	bc
-	call	_manGameCreateEnemy
-	pop	af
-	pop	bc
+;src/sys/animation.c:10: e->anim = e->anim->val.next;
+	pop	de
+	pop	hl
+	push	hl
+	push	de
+	inc	hl
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	pop	hl
+	push	hl
+	ld	(hl), e
+	inc	hl
+	ld	(hl), d
 00102$:
-;src/sys/ai.c:18: sysAIBehaviorLeftRight(e);
-	push	bc
-	call	_sysAIBehaviorLeftRight
-	pop	af
-	ret
-;src/sys/ai.c:22: void sysAIUpdateEntity(Entity_t *e)
-;	---------------------------------
-; Function sysAIUpdateEntity
-; ---------------------------------
-_sysAIUpdateEntity::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-;src/sys/ai.c:24: e->ai_behavior(e);
-	ld	c,4 (ix)
-	ld	b,5 (ix)
-	push	bc
-	pop	iy
-	ld	l, 9 (iy)
-	ld	h, 10 (iy)
-	push	bc
-	call	___sdcc_call_hl
-	pop	af
+;src/sys/animation.c:13: e->sprite = e->anim->val.sprite;
+	ld	hl, #0x0007
+	add	hl,bc
+	ld	c, l
+	ld	b, h
+	pop	hl
+	push	hl
+	ld	e, (hl)
+	inc	hl
+	ld	h, (hl)
+	ld	l, e
+	inc	hl
+	ld	e, (hl)
+	inc	hl
+	ld	d, (hl)
+	ld	a, e
+	ld	(bc), a
+	inc	bc
+	ld	a, d
+	ld	(bc), a
+;src/sys/animation.c:14: e->anim_counter = e->anim->time;        
+	pop	hl
+	push	hl
+	ld	c, (hl)
+	inc	hl
+	ld	b, (hl)
+	ld	a, (bc)
+	ld	l,-2 (ix)
+	ld	h,-1 (ix)
+	ld	(hl), a
+00105$:
+	ld	sp, ix
 	pop	ix
 	ret
-;src/sys/ai.c:27: void sysAIUpdate()
+;src/sys/animation.c:19: void sysAnimationUpdate()
 ;	---------------------------------
-; Function sysAIUpdate
+; Function sysAnimationUpdate
 ; ---------------------------------
-_sysAIUpdate::
-;src/sys/ai.c:30: sysAIUpdateEntity, 
-	ld	a, #0x0a
+_sysAnimationUpdate::
+;src/sys/animation.c:21: manEntityForAllMatching (sysAnimationUpdateEntity, E_TYPE_ANIM);
+	ld	a, #0x10
 	push	af
 	inc	sp
-	ld	hl, #_sysAIUpdateEntity
+	ld	hl, #_sysAnimationUpdateEntity
 	push	hl
 	call	_manEntityForAllMatching
 	pop	af

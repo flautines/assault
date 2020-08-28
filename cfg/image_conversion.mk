@@ -28,7 +28,7 @@
 ##
 
 ## 16 colours palette
-PALETTE=0 15 12 9 17 1 2 11 24 3 10 13 3 6 26 0
+PALETTE=0 15 12 9 17 1 2 11 24 3 10 13 3 6 26 16
 
 ## Default values
 #$(eval $(call IMG2SP, SET_MODE        , 0                  ))  { 0, 1, 2 }
@@ -48,6 +48,7 @@ $(eval $(call IMG2SP, CONVERT_PALETTE , $(PALETTE), main_palette ))
 $(eval $(call IMG2SP, CONVERT         , assets/nave_nodriza_01.png, 36, 18, spr_nave_nodriza))
 $(eval $(call IMG2SP, CONVERT         , assets/nave_jugador.png, 12, 8, spr_nave_jugador))
 $(eval $(call IMG2SP, CONVERT         , assets/numeros.png, 6, 8, spr_numeros))
+$(eval $(call IMG2SP, CONVERT         , assets/enemigo_01.png, 20, 10, spr_enemigo_01))
 
 ##
 ## OLD MACROS (For compatibility)

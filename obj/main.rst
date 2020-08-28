@@ -46,11 +46,11 @@
                              46 ;	---------------------------------
                              47 ; Function main
                              48 ; ---------------------------------
-   4280                      49 _main::
+   4348                      49 _main::
                              50 ;src/main.c:26: manGameInit();
-   4280 CD D0 43      [17]   51 	call	_manGameInit
+   4348 CD 02 45      [17]   51 	call	_manGameInit
                              52 ;src/main.c:27: manGamePlay();
-   4283 C3 79 44      [10]   53 	jp  _manGamePlay
+   434B C3 B0 45      [10]   53 	jp  _manGamePlay
                              54 	.area _CODE
                              55 	.area _INITIALIZER
                              56 	.area _CABS (ABS)

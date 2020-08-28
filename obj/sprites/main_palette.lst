@@ -57,6 +57,6 @@
    000C 5C                   57 	.db #0x5c	; 92
    000D 4C                   58 	.db #0x4c	; 76	'L'
    000E 4B                   59 	.db #0x4b	; 75	'K'
-   000F 54                   60 	.db #0x54	; 84	'T'
+   000F 47                   60 	.db #0x47	; 71	'G'
                              61 	.area _INITIALIZER
                              62 	.area _CABS (ABS)

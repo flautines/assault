@@ -21,21 +21,21 @@ Entity_t *manEntityCreate() {
   return next;
 }
 /**************************************/
-void manEntityForAll(void (*pfunUpdateEntity)(Entity_t *)) {
+void manEntityForAll(UpdateEntityFn_t fnUpdateEntity) {
   Entity_t *e = m_entities;
   while (e->type != E_TYPE_INVALID) {
-    pfunUpdateEntity(e++);
+    fnUpdateEntity(e++);
   }
 }
 /**************************************/
 void manEntityForAllMatching(
-    void (*pfunUpdateEntity)(Entity_t *),
-    u8 signature) 
+    UpdateEntityFn_t fnUpdateEntity,
+    u8               signature) 
 {
   Entity_t *e = m_entities;  
   while (e->type != E_TYPE_INVALID) {
     if ((e->type & signature) == signature)
-      pfunUpdateEntity(e);
+      fnUpdateEntity(e);
     e++;
   }
 }

@@ -2,13 +2,13 @@
 ; File Created by SDCC : free open source ANSI-C Compiler
 ; Version 3.6.8 #9946 (Linux)
 ;--------------------------------------------------------
-	.module main_palette
+	.module animation
 	.optsdcc -mz80
 	
 ;--------------------------------------------------------
 ; Public variables in this module
 ;--------------------------------------------------------
-	.globl _main_palette
+	.globl _animEnemy01
 ;--------------------------------------------------------
 ; special function registers
 ;--------------------------------------------------------
@@ -41,22 +41,12 @@
 ;--------------------------------------------------------
 	.area _CODE
 	.area _CODE
-_main_palette:
-	.db #0x54	; 84	'T'
-	.db #0x4e	; 78	'N'
-	.db #0x5e	; 94
-	.db #0x56	; 86	'V'
-	.db #0x4f	; 79	'O'
-	.db #0x44	; 68	'D'
-	.db #0x55	; 85	'U'
-	.db #0x57	; 87	'W'
-	.db #0x4a	; 74	'J'
-	.db #0x5c	; 92
-	.db #0x46	; 70	'F'
-	.db #0x40	; 64
-	.db #0x5c	; 92
-	.db #0x4c	; 76	'L'
-	.db #0x4b	; 75	'K'
-	.db #0x47	; 71	'G'
+_animEnemy01:
+	.db #0x0c	; 12
+	.dw _spr_enemigo_01_0
+	.db #0x0c	; 12
+	.dw _spr_enemigo_01_1
+	.db #0x00	; 0
+	.dw _animEnemy01
 	.area _INITIALIZER
 	.area _CABS (ABS)

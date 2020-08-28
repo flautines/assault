@@ -7,21 +7,15 @@ Symbol Table
     .__.ABS.                                                    =  0000 G
     .__.CPU.                                                    =  0000 L
     .__.H$L.                                                    =  0000 L
-    ___sdcc_call_hl                                                **** GX
-    _manEntityForAllMatching                                       **** GX
-    _manGameCreateEnemy                                            **** GX
-  0 _sysAIBehaviorLeftRight                                        0000 GR
-  0 _sysAIBehaviorMotherShip                                       0038 GR
-  0 _sysAIUpdate                                                   0070 GR
-  0 _sysAIUpdateEntity                                             0051 GR
-
+  0 _spr_enemigo_01_0                                              0000 GR
+  0 _spr_enemigo_01_1                                              0064 GR
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
 Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size   7E   flags    0
+   0 _CODE                                      size   C8   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

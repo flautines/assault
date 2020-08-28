@@ -7,14 +7,17 @@
 -k /home/andriu/cpctelera/cpctelera/tools/sdcc-3.6.8-r9946/share/sdcc/lib/z80
 -l /home/andriu/cpctelera/cpctelera/cpctelera.lib
 -l z80
+obj/sprites/enemigo_01.rel
 obj/sprites/numeros.rel
 obj/sprites/nave_jugador.rel
 obj/sprites/nave_nodriza_01.rel
 obj/sprites/main_palette.rel
 obj/main.rel
+obj/man/animation.rel
 obj/man/entity.rel
 obj/man/game.rel
 obj/sys/ai.rel
+obj/sys/animation.rel
 obj/sys/physics.rel
 obj/sys/render.rel
 
