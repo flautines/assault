@@ -12,8 +12,11 @@ Symbol Table
     _manGameCreateEnemy                                            **** GX
   0 _sysAIBehaviorLeftRight                                        0000 GR
   0 _sysAIBehaviorMotherShip                                       0038 GR
-  0 _sysAIUpdate                                                   0070 GR
-  0 _sysAIUpdateEntity                                             0051 GR
+  0 _sysAIInit                                                     007E GR
+  0 _sysAIUpdate                                                   00A3 GR
+  0 _sysAIUpdateEntity                                             0084 GR
+    _sysPhysicsUpDown                                              **** GX
+  1 _updown                                                        0000 GR
 
 
 ASxxxx Assembler V02.00 + NoICE + SDCC mods  (Zilog Z80 / Hitachi HD64180), page 2.
@@ -21,8 +24,8 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size   7E   flags    0
-   1 _DATA                                      size    0   flags    0
+   0 _CODE                                      size   B1   flags    0
+   1 _DATA                                      size    1   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8
    4 _HOME                                      size    0   flags    0

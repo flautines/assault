@@ -56,7 +56,7 @@ _sysAnimationUpdateEntity::
 ;src/sys/animation.c:6: if ( --(e->anim_counter) == 0 ) {
 	ld	c,4 (ix)
 	ld	b,5 (ix)
-	ld	hl, #0x000d
+	ld	hl, #0x000e
 	add	hl,bc
 	ld	-2 (ix), l
 	ld	-1 (ix), h
@@ -69,7 +69,7 @@ _sysAnimationUpdateEntity::
 	or	a, a
 	jr	NZ,00105$
 ;src/sys/animation.c:7: ++e->anim;
-	ld	hl, #0x000b
+	ld	hl, #0x000c
 	add	hl,bc
 	ex	(sp), hl
 	pop	hl
@@ -112,7 +112,7 @@ _sysAnimationUpdateEntity::
 	ld	(hl), d
 00102$:
 ;src/sys/animation.c:13: e->sprite = e->anim->val.sprite;
-	ld	hl, #0x0007
+	ld	hl, #0x0008
 	add	hl,bc
 	ld	c, l
 	ld	b, h

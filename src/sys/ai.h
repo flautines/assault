@@ -1,6 +1,7 @@
 #pragma once
 #include <man/entity.h>
 
+void sysAIInit();
 void sysAIUpdate();
 
 // AI Behaviors

@@ -121,23 +121,23 @@
    0052 C5            [11]  121 	push	bc
    0053 FD E1         [14]  122 	pop	iy
    0055 FD 7E 04      [19]  123 	ld	a, 4 (iy)
-   0058 DD 77 FE      [19]  124 	ld	-2 (ix), a
+   0058 DD 77 FF      [19]  124 	ld	-1 (ix), a
                             125 ;src/sys/render.c:30: render_e->w, 
    005B C5            [11]  126 	push	bc
    005C FD E1         [14]  127 	pop	iy
    005E FD 7E 03      [19]  128 	ld	a, 3 (iy)
-   0061 DD 77 FF      [19]  129 	ld	-1 (ix), a
+   0061 DD 77 FE      [19]  129 	ld	-2 (ix), a
                             130 ;src/sys/render.c:29: pvmem, 
                             131 ;src/sys/render.c:28: render_e->sprite, 
    0064 69            [ 4]  132 	ld	l, c
    0065 60            [ 4]  133 	ld	h, b
-   0066 01 07 00      [10]  134 	ld	bc, #0x0007
+   0066 01 08 00      [10]  134 	ld	bc, #0x0008
    0069 09            [11]  135 	add	hl, bc
    006A 4E            [ 7]  136 	ld	c, (hl)
    006B 23            [ 6]  137 	inc	hl
    006C 46            [ 7]  138 	ld	b, (hl)
-   006D DD 66 FE      [19]  139 	ld	h, -2 (ix)
-   0070 DD 6E FF      [19]  140 	ld	l, -1 (ix)
+   006D DD 66 FF      [19]  139 	ld	h, -1 (ix)
+   0070 DD 6E FE      [19]  140 	ld	l, -2 (ix)
    0073 E5            [11]  141 	push	hl
    0074 D5            [11]  142 	push	de
    0075 C5            [11]  143 	push	bc

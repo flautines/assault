@@ -56,7 +56,7 @@
                              56 ;src/sys/animation.c:6: if ( --(e->anim_counter) == 0 ) {
    000D DD 4E 04      [19]   57 	ld	c,4 (ix)
    0010 DD 46 05      [19]   58 	ld	b,5 (ix)
-   0013 21 0D 00      [10]   59 	ld	hl, #0x000d
+   0013 21 0E 00      [10]   59 	ld	hl, #0x000e
    0016 09            [11]   60 	add	hl,bc
    0017 DD 75 FE      [19]   61 	ld	-2 (ix), l
    001A DD 74 FF      [19]   62 	ld	-1 (ix), h
@@ -69,7 +69,7 @@
    0027 B7            [ 4]   69 	or	a, a
    0028 20 50         [12]   70 	jr	NZ,00105$
                              71 ;src/sys/animation.c:7: ++e->anim;
-   002A 21 0B 00      [10]   72 	ld	hl, #0x000b
+   002A 21 0C 00      [10]   72 	ld	hl, #0x000c
    002D 09            [11]   73 	add	hl,bc
    002E E3            [19]   74 	ex	(sp), hl
    002F E1            [10]   75 	pop	hl
@@ -112,7 +112,7 @@
    0057 72            [ 7]  112 	ld	(hl), d
    0058                     113 00102$:
                             114 ;src/sys/animation.c:13: e->sprite = e->anim->val.sprite;
-   0058 21 07 00      [10]  115 	ld	hl, #0x0007
+   0058 21 08 00      [10]  115 	ld	hl, #0x0008
    005B 09            [11]  116 	add	hl,bc
    005C 4D            [ 4]  117 	ld	c, l
    005D 44            [ 4]  118 	ld	b, h

@@ -11,7 +11,8 @@ Symbol Table
     _cpct_scanKeyboard_f                                           **** GX
     _manEntityForAllMatching                                       **** GX
   0 _sysPhysicsCheckKeyboard                                       0000 GR
-  0 _sysPhysicsUpdate                                              0060 GR
+  0 _sysPhysicsUpDown                                              0086 GR
+  0 _sysPhysicsUpdate                                              00A2 GR
   0 _sysPhysicsUpdateEntity                                        002A GR
 
 
@@ -20,7 +21,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size   6E   flags    0
+   0 _CODE                                      size   B0   flags    0
    1 _DATA                                      size    0   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

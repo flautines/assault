@@ -13,135 +13,192 @@
                              13 	.globl _manEntityForAllMatching
                              14 	.globl _cpct_isKeyPressed
                              15 	.globl _cpct_scanKeyboard_f
-                             16 	.globl _sysPhysicsUpdate
-                             17 ;--------------------------------------------------------
-                             18 ; special function registers
-                             19 ;--------------------------------------------------------
+                             16 	.globl _sysPhysicsUpDown
+                             17 	.globl _sysPhysicsUpdate
+                             18 ;--------------------------------------------------------
+                             19 ; special function registers
                              20 ;--------------------------------------------------------
-                             21 ; ram data
-                             22 ;--------------------------------------------------------
-                             23 	.area _DATA
-                             24 ;--------------------------------------------------------
-                             25 ; ram data
-                             26 ;--------------------------------------------------------
-                             27 	.area _INITIALIZED
-                             28 ;--------------------------------------------------------
-                             29 ; absolute external ram data
-                             30 ;--------------------------------------------------------
-                             31 	.area _DABS (ABS)
-                             32 ;--------------------------------------------------------
-                             33 ; global & static initialisations
-                             34 ;--------------------------------------------------------
-                             35 	.area _HOME
-                             36 	.area _GSINIT
-                             37 	.area _GSFINAL
-                             38 	.area _GSINIT
-                             39 ;--------------------------------------------------------
-                             40 ; Home
-                             41 ;--------------------------------------------------------
-                             42 	.area _HOME
+                             21 ;--------------------------------------------------------
+                             22 ; ram data
+                             23 ;--------------------------------------------------------
+                             24 	.area _DATA
+                             25 ;--------------------------------------------------------
+                             26 ; ram data
+                             27 ;--------------------------------------------------------
+                             28 	.area _INITIALIZED
+                             29 ;--------------------------------------------------------
+                             30 ; absolute external ram data
+                             31 ;--------------------------------------------------------
+                             32 	.area _DABS (ABS)
+                             33 ;--------------------------------------------------------
+                             34 ; global & static initialisations
+                             35 ;--------------------------------------------------------
+                             36 	.area _HOME
+                             37 	.area _GSINIT
+                             38 	.area _GSFINAL
+                             39 	.area _GSINIT
+                             40 ;--------------------------------------------------------
+                             41 ; Home
+                             42 ;--------------------------------------------------------
                              43 	.area _HOME
-                             44 ;--------------------------------------------------------
-                             45 ; code
-                             46 ;--------------------------------------------------------
-                             47 	.area _CODE
-                             48 ;src/sys/physics.c:6: void sysPhysicsCheckKeyboard(Entity_t *e)
-                             49 ;	---------------------------------
-                             50 ; Function sysPhysicsCheckKeyboard
-                             51 ; ---------------------------------
-   46CC                      52 _sysPhysicsCheckKeyboard::
-                             53 ;src/sys/physics.c:8: cpct_scanKeyboard_f();
-   46CC CD 26 48      [17]   54 	call	_cpct_scanKeyboard_f
-                             55 ;src/sys/physics.c:9: e->vx = 0;
-   46CF D1            [10]   56 	pop	de
-   46D0 C1            [10]   57 	pop	bc
-   46D1 C5            [11]   58 	push	bc
-   46D2 D5            [11]   59 	push	de
-   46D3 21 05 00      [10]   60 	ld	hl, #0x0005
-   46D6 09            [11]   61 	add	hl, bc
-   46D7 36 00         [10]   62 	ld	(hl), #0x00
-                             63 ;src/sys/physics.c:10: if      (cpct_isKeyPressed(Key_O)) e->vx = -1;
-   46D9 E5            [11]   64 	push	hl
-   46DA 21 04 04      [10]   65 	ld	hl, #0x0404
-   46DD CD 1A 48      [17]   66 	call	_cpct_isKeyPressed
-   46E0 7D            [ 4]   67 	ld	a, l
-   46E1 E1            [10]   68 	pop	hl
-   46E2 B7            [ 4]   69 	or	a, a
-   46E3 28 03         [12]   70 	jr	Z,00104$
-   46E5 36 FF         [10]   71 	ld	(hl), #0xff
-   46E7 C9            [10]   72 	ret
-   46E8                      73 00104$:
-                             74 ;src/sys/physics.c:11: else if (cpct_isKeyPressed(Key_P)) e->vx = +1;
-   46E8 E5            [11]   75 	push	hl
-   46E9 21 03 08      [10]   76 	ld	hl, #0x0803
-   46EC CD 1A 48      [17]   77 	call	_cpct_isKeyPressed
-   46EF 7D            [ 4]   78 	ld	a, l
-   46F0 E1            [10]   79 	pop	hl
-   46F1 B7            [ 4]   80 	or	a, a
-   46F2 C8            [11]   81 	ret	Z
-   46F3 36 01         [10]   82 	ld	(hl), #0x01
-   46F5 C9            [10]   83 	ret
-                             84 ;src/sys/physics.c:14: void sysPhysicsUpdateEntity(Entity_t *e) {
-                             85 ;	---------------------------------
-                             86 ; Function sysPhysicsUpdateEntity
-                             87 ; ---------------------------------
-   46F6                      88 _sysPhysicsUpdateEntity::
-   46F6 DD E5         [15]   89 	push	ix
-   46F8 DD 21 00 00   [14]   90 	ld	ix,#0
-   46FC DD 39         [15]   91 	add	ix,sp
-                             92 ;src/sys/physics.c:16: if (e->type & E_TYPE_INPUT)
-   46FE DD 5E 04      [19]   93 	ld	e,4 (ix)
-   4701 DD 56 05      [19]   94 	ld	d,5 (ix)
-   4704 1A            [ 7]   95 	ld	a, (de)
-   4705 CB 57         [ 8]   96 	bit	2, a
-   4707 28 07         [12]   97 	jr	Z,00102$
-                             98 ;src/sys/physics.c:17: sysPhysicsCheckKeyboard(e);
-   4709 D5            [11]   99 	push	de
-   470A D5            [11]  100 	push	de
-   470B CD CC 46      [17]  101 	call	_sysPhysicsCheckKeyboard
-   470E F1            [10]  102 	pop	af
-   470F D1            [10]  103 	pop	de
-   4710                     104 00102$:
-                            105 ;src/sys/physics.c:19: i8 vx= e->vx;
-   4710 D5            [11]  106 	push	de
-   4711 FD E1         [14]  107 	pop	iy
-   4713 FD 4E 05      [19]  108 	ld	c, 5 (iy)
-                            109 ;src/sys/physics.c:20: e->x += vx;  
-   4716 6B            [ 4]  110 	ld	l, e
-   4717 62            [ 4]  111 	ld	h, d
-   4718 23            [ 6]  112 	inc	hl
-   4719 7E            [ 7]  113 	ld	a, (hl)
-   471A 81            [ 4]  114 	add	a, c
-   471B 77            [ 7]  115 	ld	(hl), a
-                            116 ;src/sys/physics.c:21: e->y += e->vy;
-   471C 4B            [ 4]  117 	ld	c, e
-   471D 42            [ 4]  118 	ld	b, d
-   471E 03            [ 6]  119 	inc	bc
-   471F 03            [ 6]  120 	inc	bc
-   4720 0A            [ 7]  121 	ld	a, (bc)
-   4721 EB            [ 4]  122 	ex	de,hl
-   4722 11 06 00      [10]  123 	ld	de, #0x0006
-   4725 19            [11]  124 	add	hl, de
-   4726 5E            [ 7]  125 	ld	e, (hl)
-   4727 83            [ 4]  126 	add	a, e
-   4728 02            [ 7]  127 	ld	(bc), a
-   4729 DD E1         [14]  128 	pop	ix
-   472B C9            [10]  129 	ret
-                            130 ;src/sys/physics.c:25: void sysPhysicsUpdate() 
-                            131 ;	---------------------------------
-                            132 ; Function sysPhysicsUpdate
-                            133 ; ---------------------------------
-   472C                     134 _sysPhysicsUpdate::
-                            135 ;src/sys/physics.c:28: sysPhysicsUpdateEntity, 
-   472C 3E 02         [ 7]  136 	ld	a, #0x02
-   472E F5            [11]  137 	push	af
-   472F 33            [ 6]  138 	inc	sp
-   4730 21 F6 46      [10]  139 	ld	hl, #_sysPhysicsUpdateEntity
-   4733 E5            [11]  140 	push	hl
-   4734 CD A7 43      [17]  141 	call	_manEntityForAllMatching
-   4737 F1            [10]  142 	pop	af
-   4738 33            [ 6]  143 	inc	sp
-   4739 C9            [10]  144 	ret
-                            145 	.area _CODE
-                            146 	.area _INITIALIZER
-                            147 	.area _CABS (ABS)
+                             44 	.area _HOME
+                             45 ;--------------------------------------------------------
+                             46 ; code
+                             47 ;--------------------------------------------------------
+                             48 	.area _CODE
+                             49 ;src/sys/physics.c:6: void sysPhysicsCheckKeyboard(Entity_t *e)
+                             50 ;	---------------------------------
+                             51 ; Function sysPhysicsCheckKeyboard
+                             52 ; ---------------------------------
+   4730                      53 _sysPhysicsCheckKeyboard::
+                             54 ;src/sys/physics.c:8: cpct_scanKeyboard_f();
+   4730 CD CC 48      [17]   55 	call	_cpct_scanKeyboard_f
+                             56 ;src/sys/physics.c:9: e->vx = 0;
+   4733 D1            [10]   57 	pop	de
+   4734 C1            [10]   58 	pop	bc
+   4735 C5            [11]   59 	push	bc
+   4736 D5            [11]   60 	push	de
+   4737 21 05 00      [10]   61 	ld	hl, #0x0005
+   473A 09            [11]   62 	add	hl, bc
+   473B 36 00         [10]   63 	ld	(hl), #0x00
+                             64 ;src/sys/physics.c:10: if      (cpct_isKeyPressed(Key_O)) e->vx = -1;
+   473D E5            [11]   65 	push	hl
+   473E 21 04 04      [10]   66 	ld	hl, #0x0404
+   4741 CD C0 48      [17]   67 	call	_cpct_isKeyPressed
+   4744 7D            [ 4]   68 	ld	a, l
+   4745 E1            [10]   69 	pop	hl
+   4746 B7            [ 4]   70 	or	a, a
+   4747 28 03         [12]   71 	jr	Z,00104$
+   4749 36 FF         [10]   72 	ld	(hl), #0xff
+   474B C9            [10]   73 	ret
+   474C                      74 00104$:
+                             75 ;src/sys/physics.c:11: else if (cpct_isKeyPressed(Key_P)) e->vx = +1;
+   474C E5            [11]   76 	push	hl
+   474D 21 03 08      [10]   77 	ld	hl, #0x0803
+   4750 CD C0 48      [17]   78 	call	_cpct_isKeyPressed
+   4753 7D            [ 4]   79 	ld	a, l
+   4754 E1            [10]   80 	pop	hl
+   4755 B7            [ 4]   81 	or	a, a
+   4756 C8            [11]   82 	ret	Z
+   4757 36 01         [10]   83 	ld	(hl), #0x01
+   4759 C9            [10]   84 	ret
+                             85 ;src/sys/physics.c:14: void sysPhysicsUpdateEntity(Entity_t *e) {
+                             86 ;	---------------------------------
+                             87 ; Function sysPhysicsUpdateEntity
+                             88 ; ---------------------------------
+   475A                      89 _sysPhysicsUpdateEntity::
+   475A DD E5         [15]   90 	push	ix
+   475C DD 21 00 00   [14]   91 	ld	ix,#0
+   4760 DD 39         [15]   92 	add	ix,sp
+   4762 F5            [11]   93 	push	af
+   4763 3B            [ 6]   94 	dec	sp
+                             95 ;src/sys/physics.c:15: u8 current_frame = e->current_frame;
+   4764 DD 4E 04      [19]   96 	ld	c,4 (ix)
+   4767 DD 46 05      [19]   97 	ld	b,5 (ix)
+   476A 21 0F 00      [10]   98 	ld	hl, #0x000f
+   476D 09            [11]   99 	add	hl,bc
+   476E E3            [19]  100 	ex	(sp), hl
+   476F E1            [10]  101 	pop	hl
+   4770 E5            [11]  102 	push	hl
+   4771 7E            [ 7]  103 	ld	a, (hl)
+   4772 DD 77 FF      [19]  104 	ld	-1 (ix), a
+                            105 ;src/sys/physics.c:16: u8 move_counter = e->move_counter;
+   4775 C5            [11]  106 	push	bc
+   4776 FD E1         [14]  107 	pop	iy
+   4778 FD 5E 07      [19]  108 	ld	e, 7 (iy)
+                            109 ;src/sys/physics.c:17: if (e->type & E_TYPE_INPUT)
+   477B 0A            [ 7]  110 	ld	a, (bc)
+   477C CB 57         [ 8]  111 	bit	2, a
+   477E 28 09         [12]  112 	jr	Z,00102$
+                            113 ;src/sys/physics.c:18: sysPhysicsCheckKeyboard(e);
+   4780 C5            [11]  114 	push	bc
+   4781 D5            [11]  115 	push	de
+   4782 C5            [11]  116 	push	bc
+   4783 CD 30 47      [17]  117 	call	_sysPhysicsCheckKeyboard
+   4786 F1            [10]  118 	pop	af
+   4787 D1            [10]  119 	pop	de
+   4788 C1            [10]  120 	pop	bc
+   4789                     121 00102$:
+                            122 ;src/sys/physics.c:20: if ( (current_frame & move_counter) == 0 )
+   4789 DD 7E FF      [19]  123 	ld	a, -1 (ix)
+   478C A3            [ 4]  124 	and	a,e
+   478D 20 1B         [12]  125 	jr	NZ,00104$
+                            126 ;src/sys/physics.c:22: i8 vx= e->vx;
+   478F 69            [ 4]  127 	ld	l, c
+   4790 60            [ 4]  128 	ld	h, b
+   4791 11 05 00      [10]  129 	ld	de, #0x0005
+   4794 19            [11]  130 	add	hl, de
+   4795 56            [ 7]  131 	ld	d, (hl)
+                            132 ;src/sys/physics.c:23: e->x += vx;  
+   4796 69            [ 4]  133 	ld	l, c
+   4797 60            [ 4]  134 	ld	h, b
+   4798 23            [ 6]  135 	inc	hl
+   4799 7E            [ 7]  136 	ld	a, (hl)
+   479A 82            [ 4]  137 	add	a, d
+   479B 77            [ 7]  138 	ld	(hl), a
+                            139 ;src/sys/physics.c:24: e->y += e->vy;
+   479C 59            [ 4]  140 	ld	e, c
+   479D 50            [ 4]  141 	ld	d, b
+   479E 13            [ 6]  142 	inc	de
+   479F 13            [ 6]  143 	inc	de
+   47A0 1A            [ 7]  144 	ld	a, (de)
+   47A1 69            [ 4]  145 	ld	l, c
+   47A2 60            [ 4]  146 	ld	h, b
+   47A3 01 06 00      [10]  147 	ld	bc, #0x0006
+   47A6 09            [11]  148 	add	hl, bc
+   47A7 4E            [ 7]  149 	ld	c, (hl)
+   47A8 81            [ 4]  150 	add	a, c
+   47A9 12            [ 7]  151 	ld	(de), a
+   47AA                     152 00104$:
+                            153 ;src/sys/physics.c:26: ++current_frame;
+   47AA DD 4E FF      [19]  154 	ld	c, -1 (ix)
+   47AD 0C            [ 4]  155 	inc	c
+                            156 ;src/sys/physics.c:27: e->current_frame = current_frame;
+   47AE E1            [10]  157 	pop	hl
+   47AF E5            [11]  158 	push	hl
+   47B0 71            [ 7]  159 	ld	(hl), c
+   47B1 DD F9         [10]  160 	ld	sp, ix
+   47B3 DD E1         [14]  161 	pop	ix
+   47B5 C9            [10]  162 	ret
+                            163 ;src/sys/physics.c:30: void sysPhysicsUpDown(Entity_t *e, u8 up)
+                            164 ;	---------------------------------
+                            165 ; Function sysPhysicsUpDown
+                            166 ; ---------------------------------
+   47B6                     167 _sysPhysicsUpDown::
+                            168 ;src/sys/physics.c:32: e->vy = up ? -1 : 1;
+   47B6 D1            [10]  169 	pop	de
+   47B7 C1            [10]  170 	pop	bc
+   47B8 C5            [11]  171 	push	bc
+   47B9 D5            [11]  172 	push	de
+   47BA 21 06 00      [10]  173 	ld	hl, #0x0006
+   47BD 09            [11]  174 	add	hl, bc
+   47BE FD 21 04 00   [14]  175 	ld	iy, #4
+   47C2 FD 39         [15]  176 	add	iy, sp
+   47C4 FD 7E 00      [19]  177 	ld	a, 0 (iy)
+   47C7 B7            [ 4]  178 	or	a, a
+   47C8 28 04         [12]  179 	jr	Z,00103$
+   47CA 0E FF         [ 7]  180 	ld	c, #0xff
+   47CC 18 02         [12]  181 	jr	00104$
+   47CE                     182 00103$:
+   47CE 0E 01         [ 7]  183 	ld	c, #0x01
+   47D0                     184 00104$:
+   47D0 71            [ 7]  185 	ld	(hl), c
+   47D1 C9            [10]  186 	ret
+                            187 ;src/sys/physics.c:35: void sysPhysicsUpdate() 
+                            188 ;	---------------------------------
+                            189 ; Function sysPhysicsUpdate
+                            190 ; ---------------------------------
+   47D2                     191 _sysPhysicsUpdate::
+                            192 ;src/sys/physics.c:38: sysPhysicsUpdateEntity, 
+   47D2 3E 02         [ 7]  193 	ld	a, #0x02
+   47D4 F5            [11]  194 	push	af
+   47D5 33            [ 6]  195 	inc	sp
+   47D6 21 5A 47      [10]  196 	ld	hl, #_sysPhysicsUpdateEntity
+   47D9 E5            [11]  197 	push	hl
+   47DA CD CB 43      [17]  198 	call	_manEntityForAllMatching
+   47DD F1            [10]  199 	pop	af
+   47DE 33            [ 6]  200 	inc	sp
+   47DF C9            [10]  201 	ret
+                            202 	.area _CODE
+                            203 	.area _INITIALIZER
+                            204 	.area _CABS (ABS)

@@ -36,10 +36,12 @@ struct _Entity_t {
     u8              x, y;
     u8              w, h;
     i8              vx, vy;
+    u8              move_counter;
     u8             *sprite;
     AiBehaviorFn_t  ai_behavior;
     AnimFrame_t    *anim;
     u8              anim_counter;
+    u8              current_frame;
 };
 
 void      manEntityInit();

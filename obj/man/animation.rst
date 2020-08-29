@@ -41,12 +41,12 @@
                              41 ;--------------------------------------------------------
                              42 	.area _CODE
                              43 	.area _CODE
-   434E                      44 _animEnemy01:
-   434E 0C                   45 	.db #0x0c	; 12
-   434F 00 40                46 	.dw _spr_enemigo_01_0
-   4351 0C                   47 	.db #0x0c	; 12
-   4352 64 40                48 	.dw _spr_enemigo_01_1
-   4354 00                   49 	.db #0x00	; 0
-   4355 4E 43                50 	.dw _animEnemy01
+   4372                      44 _animEnemy01:
+   4372 0C                   45 	.db #0x0c	; 12
+   4373 00 40                46 	.dw _spr_enemigo_01_0
+   4375 0C                   47 	.db #0x0c	; 12
+   4376 64 40                48 	.dw _spr_enemigo_01_1
+   4378 00                   49 	.db #0x00	; 0
+   4379 72 43                50 	.dw _animEnemy01
                              51 	.area _INITIALIZER
                              52 	.area _CABS (ABS)

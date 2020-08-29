@@ -12,6 +12,7 @@
 	.globl _wait
 	.globl _sysAnimationUpdate
 	.globl _sysAIUpdate
+	.globl _sysAIInit
 	.globl _sysRenderInit
 	.globl _sysRenderUpdate
 	.globl _sysPhysicsUpdate
@@ -63,23 +64,23 @@ _enemy_on_lane::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src/man/game.c:70: void wait(u8 n)
+;src/man/game.c:75: void wait(u8 n)
 ;	---------------------------------
 ; Function wait
 ; ---------------------------------
 _wait::
-;src/man/game.c:72: do {
+;src/man/game.c:77: do {
 	ld	hl, #2+0
 	add	hl, sp
 	ld	c, (hl)
 00101$:
-;src/man/game.c:73: cpct_waitHalts(n);
+;src/man/game.c:78: cpct_waitHalts(n);
 	push	bc
 	ld	l, c
 	call	_cpct_waitHalts
 	call	_cpct_waitVSYNC
 	pop	bc
-;src/man/game.c:75: } while (--n);
+;src/man/game.c:80: } while (--n);
 	dec c
 	jr	NZ,00101$
 	ret
@@ -88,25 +89,29 @@ _nave_nodriza_tmpl:
 	.db #0x26	; 38
 	.db #0x12	; 18
 	.db #0x12	; 18
-	.db #0x10	; 16
+	.db #0x12	; 18
 	.db #0xff	; -1
 	.db #0x00	;  0
+	.db #0x01	; 1
 	.dw _spr_nave_nodriza
 	.dw _sysAIBehaviorMotherShip
 	.dw #0x0000
 	.db #0x00	; 0
+	.db #0x00	; 0
 _enemy01_tmpl:
 	.db #0x1b	; 27
 	.db #0x00	; 0
-	.db #0x30	; 48	'0'
+	.db #0x32	; 50	'2'
 	.db #0x0a	; 10
 	.db #0x0a	; 10
 	.db #0xff	; -1
 	.db #0x00	;  0
+	.db #0x01	; 1
 	.dw _spr_enemigo_01_0
 	.dw _sysAIBehaviorLeftRight
 	.dw _animEnemy01
 	.db #0x0c	; 12
+	.db #0x00	; 0
 _nave_vidas_tmpl:
 	.db #0x01	; 1
 	.db #0x00	; 0
@@ -115,9 +120,11 @@ _nave_vidas_tmpl:
 	.db #0x08	; 8
 	.db #0x00	;  0
 	.db #0x00	;  0
+	.db #0x00	; 0
 	.dw _spr_nave_jugador_1
 	.dw #0x0000
 	.dw #0x0000
+	.db #0x00	; 0
 	.db #0x00	; 0
 _jugador_tmpl:
 	.db #0x07	; 7
@@ -127,9 +134,11 @@ _jugador_tmpl:
 	.db #0x08	; 8
 	.db #0x00	;  0
 	.db #0x00	;  0
+	.db #0x00	; 0
 	.dw _spr_nave_jugador_0
 	.dw #0x0000
 	.dw #0x0000
+	.db #0x00	; 0
 	.db #0x00	; 0
 _num_tmpl:
 	.db #0x01	; 1
@@ -139,11 +148,13 @@ _num_tmpl:
 	.db #0x08	; 8
 	.db #0x00	;  0
 	.db #0x00	;  0
+	.db #0x00	; 0
 	.dw _spr_numeros_00
 	.dw #0x0000
 	.dw #0x0000
 	.db #0x00	; 0
-;src/man/game.c:78: Entity_t *manGameCreateFromTemplate(const Entity_t *tmpl)
+	.db #0x00	; 0
+;src/man/game.c:83: Entity_t *manGameCreateFromTemplate(const Entity_t *tmpl)
 ;	---------------------------------
 ; Function manGameCreateFromTemplate
 ; ---------------------------------
@@ -151,24 +162,24 @@ _manGameCreateFromTemplate::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;src/man/game.c:80: Entity_t *e = manEntityCreate();
+;src/man/game.c:85: Entity_t *e = manEntityCreate();
 	call	_manEntityCreate
-;src/man/game.c:81: cpct_memcpy (e, tmpl, sizeof (Entity_t));
+;src/man/game.c:86: cpct_memcpy (e, tmpl, sizeof (Entity_t));
 	ld	c,4 (ix)
 	ld	b,5 (ix)
 	push	hl
 	pop	iy
 	push	hl
-	ld	de, #0x000e
+	ld	de, #0x0010
 	push	de
 	push	bc
 	push	iy
 	call	_cpct_memcpy
 	pop	hl
-;src/man/game.c:82: return e;    
+;src/man/game.c:87: return e;    
 	pop	ix
 	ret
-;src/man/game.c:85: void manGameCreateEnemy(Entity_t *e)
+;src/man/game.c:90: void manGameCreateEnemy(Entity_t *e)
 ;	---------------------------------
 ; Function manGameCreateEnemy
 ; ---------------------------------
@@ -176,18 +187,18 @@ _manGameCreateEnemy::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;src/man/game.c:87: if (enemy_on_lane) return;
+;src/man/game.c:92: if (enemy_on_lane) return;
 	ld	a,(#_enemy_on_lane + 0)
 	or	a, a
 	jr	NZ,00103$
-;src/man/game.c:91: Entity_t *minion = manGameCreateFromTemplate (&enemy01_tmpl);
+;src/man/game.c:96: Entity_t *minion = manGameCreateFromTemplate (&enemy01_tmpl);
 	ld	hl, #_enemy01_tmpl
 	push	hl
 	call	_manGameCreateFromTemplate
 	pop	af
 	ld	c, l
 	ld	b, h
-;src/man/game.c:92: minion->x = e->x+4;
+;src/man/game.c:97: minion->x = e->x+4;
 	ld	e, c
 	ld	d, b
 	inc	de
@@ -203,7 +214,7 @@ _manGameCreateEnemy::
 	ld	a, (hl)
 	add	a, #0x04
 	ld	(de), a
-;src/man/game.c:93: minion->vx = e->vx;
+;src/man/game.c:98: minion->vx = e->vx;
 	inc	bc
 	inc	bc
 	inc	bc
@@ -211,13 +222,13 @@ _manGameCreateEnemy::
 	inc	bc
 	ld	a, 5 (iy)
 	ld	(bc), a
-;src/man/game.c:97: enemy_on_lane = 1;
+;src/man/game.c:102: enemy_on_lane = 1;
 	ld	hl,#_enemy_on_lane + 0
 	ld	(hl), #0x01
 00103$:
 	pop	ix
 	ret
-;src/man/game.c:100: void manGameInit()
+;src/man/game.c:105: void manGameInit()
 ;	---------------------------------
 ; Function manGameInit
 ; ---------------------------------
@@ -225,76 +236,78 @@ _manGameInit::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-	ld	hl, #-17
+	ld	hl, #-19
 	add	hl, sp
 	ld	sp, hl
-;src/man/game.c:102: manEntityInit();
+;src/man/game.c:107: manEntityInit();
 	call	_manEntityInit
-;src/man/game.c:103: sysRenderInit();
+;src/man/game.c:108: sysRenderInit();
 	call	_sysRenderInit
-;src/man/game.c:106: manGameCreateFromTemplate (&nave_nodriza_tmpl);
+;src/man/game.c:109: sysAIInit();
+	call	_sysAIInit
+;src/man/game.c:112: manGameCreateFromTemplate (&nave_nodriza_tmpl);
 	ld	hl, #_nave_nodriza_tmpl
 	push	hl
 	call	_manGameCreateFromTemplate
 	pop	af
-;src/man/game.c:108: enemy_on_lane = 0;
+;src/man/game.c:114: enemy_on_lane = 0;
 	ld	hl,#_enemy_on_lane + 0
 	ld	(hl), #0x00
-;src/man/game.c:113: do {
+;src/man/game.c:119: do {
 	ld	c, #0x1e
 00101$:
-;src/man/game.c:114: Entity_t *e = 
+;src/man/game.c:120: Entity_t *e = 
 	push	bc
 	ld	hl, #_nave_vidas_tmpl
 	push	hl
 	call	_manGameCreateFromTemplate
 	pop	af
 	pop	bc
-;src/man/game.c:116: x -= 10;
+;src/man/game.c:122: x -= 10;
 	ld	a, c
 	add	a, #0xf6
 	ld	c, a
-;src/man/game.c:117: e->x = x;
+;src/man/game.c:123: e->x = x;
 	inc	hl
 	ld	(hl), c
-;src/man/game.c:118: } while (x);
+;src/man/game.c:124: } while (x);
 	ld	a, c
 	or	a, a
 	jr	NZ,00101$
-;src/man/game.c:121: manGameCreateFromTemplate(&jugador_tmpl);
+;src/man/game.c:127: manGameCreateFromTemplate(&jugador_tmpl);
 	ld	hl, #_jugador_tmpl
 	push	hl
 	call	_manGameCreateFromTemplate
 	pop	af
-;src/man/game.c:127: do {
+;src/man/game.c:133: do {
 	ld	hl, #0x0001
 	add	hl, sp
 	ld	c, l
 	ld	b, h
 	ld	-2 (ix), c
 	ld	-1 (ix), b
-	ld	-17 (ix), #0x06
+	ld	-19 (ix), #0x06
 00104$:
-;src/man/game.c:128: --d;        
-	dec	-17 (ix)
-;src/man/game.c:129: cpct_memcpy(&num, &num_tmpl, sizeof(Entity_t));      
+;src/man/game.c:134: --d;        
+	dec	-19 (ix)
+;src/man/game.c:135: cpct_memcpy(&num, &num_tmpl, sizeof(Entity_t));      
 	ld	e, c
 	ld	d, b
 	push	bc
-	ld	hl, #0x000e
+	ld	hl, #0x0010
 	push	hl
 	ld	hl, #_num_tmpl
 	push	hl
 	push	de
 	call	_cpct_memcpy
 	pop	bc
-;src/man/game.c:130: num.sprite += d * SPR_NUMEROS_00_H * SPR_NUMEROS_00_W;
-	ld	iy, #0x0007
+;src/man/game.c:136: num.sprite += d * SPR_NUMEROS_00_H * SPR_NUMEROS_00_W;
+	ld	iy, #0x0008
 	add	iy, bc
 	ld	e, 0 (iy)
 	ld	d, 1 (iy)
 	push	de
-	ld	e,-17 (ix)
+	ld	e,-19 (ix)
 	ld	d,#0x00
 	ld	l, e
 	ld	h, d
@@ -307,12 +320,12 @@ _manGameInit::
 	add	hl, de
 	ld	0 (iy), l
 	ld	1 (iy), h
-;src/man/game.c:131: num.x += d * (SPR_NUMEROS_00_W+2);
+;src/man/game.c:137: num.x += d * (SPR_NUMEROS_00_W+2);
 	push	bc
 	pop	iy
 	inc	iy
 	ld	d, 0 (iy)
-	ld	l, -17 (ix)
+	ld	l, -19 (ix)
 	ld	e, l
 	add	hl, hl
 	add	hl, hl
@@ -320,7 +333,7 @@ _manGameInit::
 	ld	a, d
 	add	a, l
 	ld	0 (iy), a
-;src/man/game.c:132: manGameCreateFromTemplate(&num);
+;src/man/game.c:138: manGameCreateFromTemplate(&num);
 	ld	e,-2 (ix)
 	ld	d,-1 (ix)
 	push	bc
@@ -328,29 +341,29 @@ _manGameInit::
 	call	_manGameCreateFromTemplate
 	pop	af
 	pop	bc
-;src/man/game.c:134: } while (d);
-	ld	a, -17 (ix)
+;src/man/game.c:140: } while (d);
+	ld	a, -19 (ix)
 	or	a, a
 	jr	NZ,00104$
 	ld	sp, ix
 	pop	ix
 	ret
-;src/man/game.c:139: void manGamePlay()
+;src/man/game.c:145: void manGamePlay()
 ;	---------------------------------
 ; Function manGamePlay
 ; ---------------------------------
 _manGamePlay::
-;src/man/game.c:141: while (1) {
+;src/man/game.c:147: while (1) {
 00102$:
-;src/man/game.c:142: sysAIUpdate();
+;src/man/game.c:148: sysAIUpdate();
 	call	_sysAIUpdate
-;src/man/game.c:143: sysPhysicsUpdate();
+;src/man/game.c:149: sysPhysicsUpdate();
 	call	_sysPhysicsUpdate
-;src/man/game.c:144: sysAnimationUpdate();
+;src/man/game.c:150: sysAnimationUpdate();
 	call	_sysAnimationUpdate
-;src/man/game.c:145: sysRenderUpdate();
+;src/man/game.c:151: sysRenderUpdate();
 	call	_sysRenderUpdate
-;src/man/game.c:146: manEntityUpdate();
+;src/man/game.c:152: manEntityUpdate();
 	call	_manEntityUpdate
 	jr	00102$
 	.area _CODE

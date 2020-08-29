@@ -11,19 +11,19 @@ Symbol Table
     _cpct_memcpy                                                   **** GX
     _cpct_waitHalts                                                **** GX
     _cpct_waitVSYNC                                                **** GX
-  0 _enemy01_tmpl                                                  0020 GR
+  0 _enemy01_tmpl                                                  0022 GR
   1 _enemy_on_lane                                                 0000 GR
-  0 _jugador_tmpl                                                  003C GR
+  0 _jugador_tmpl                                                  0042 GR
     _manEntityCreate                                               **** GX
     _manEntityInit                                                 **** GX
     _manEntityUpdate                                               **** GX
-  0 _manGameCreateEnemy                                            007B GR
-  0 _manGameCreateFromTemplate                                     0058 GR
-  0 _manGameInit                                                   00BA GR
-  0 _manGamePlay                                                   0168 GR
+  0 _manGameCreateEnemy                                            0085 GR
+  0 _manGameCreateFromTemplate                                     0062 GR
+  0 _manGameInit                                                   00C4 GR
+  0 _manGamePlay                                                   0175 GR
   0 _nave_nodriza_tmpl                                             0012 GR
-  0 _nave_vidas_tmpl                                               002E GR
-  0 _num_tmpl                                                      004A GR
+  0 _nave_vidas_tmpl                                               0032 GR
+  0 _num_tmpl                                                      0052 GR
     _spr_enemigo_01_0                                              **** GX
     _spr_nave_jugador_0                                            **** GX
     _spr_nave_jugador_1                                            **** GX
@@ -31,6 +31,7 @@ Symbol Table
     _spr_numeros_00                                                **** GX
     _sysAIBehaviorLeftRight                                        **** GX
     _sysAIBehaviorMotherShip                                       **** GX
+    _sysAIInit                                                     **** GX
     _sysAIUpdate                                                   **** GX
     _sysAnimationUpdate                                            **** GX
     _sysPhysicsUpdate                                              **** GX
@@ -44,7 +45,7 @@ Hexadecimal [16-Bits]
 
 Area Table
 
-   0 _CODE                                      size  179   flags    0
+   0 _CODE                                      size  186   flags    0
    1 _DATA                                      size    1   flags    0
    2 _INITIALIZED                               size    0   flags    0
    3 _DABS                                      size    0   flags    8

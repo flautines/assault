@@ -17,22 +17,22 @@ Area                                    Addr        Size        Decimal Bytes (A
      00000000  l__INITIALIZER                  
      00000000  s__CABS                         
      00000000  s__DABS                         
-     000000AE  l__DATA                         
-     00000A84  l__CODE                         
+     000000C7  l__DATA                         
+     00000B2A  l__CODE                         
      00004000  s__CODE                         
-     00004A84  s__DATA                         
-     00004B32  s__GSFINAL                      
-     00004B32  s__GSINIT                       
-     00004B32  s__HOME                         
-     00004B32  s__INITIALIZED                  
-     00004B32  s__INITIALIZER                  
+     00004B2A  s__DATA                         
+     00004BF1  s__GSFINAL                      
+     00004BF1  s__GSINIT                       
+     00004BF1  s__HOME                         
+     00004BF1  s__INITIALIZED                  
+     00004BF1  s__INITIALIZER                  
 
 ASxxxx Linker V03.00 + NoICE + sdld,  page 2.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00004000    00000A84 =        2692. bytes (REL,CON)
+_CODE                               00004000    00000B2A =        2858. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
@@ -51,89 +51,90 @@ _CODE                               00004000    00000A84 =        2692. bytes (R
      000041B8  _spr_nave_jugador_0                nave_jugador
      000041E8  _spr_nave_jugador_1                nave_jugador
      00004218  _spr_nave_nodriza                  nave_nodriza_01
-     00004338  _main_palette                      main_palette
-     00004348  _main                              main
-     0000434E  _animEnemy01                       animation
-     00004357  _manEntityInit                     entity
-     00004379  _manEntityCreate                   entity
-     0000438A  _manEntityForAll                   entity
-     000043A7  _manEntityForAllMatching           entity
-     000043D4  _manEntityDestroy                  entity
-     00004412  _manEntityDelete                   entity
-     0000441B  _manEntityUpdate                   entity
-     00004433  _manEntityAvailable                entity
-     00004448  _wait                              game
-     0000445A  _nave_nodriza_tmpl                 game
-     00004468  _enemy01_tmpl                      game
-     00004476  _nave_vidas_tmpl                   game
-     00004484  _jugador_tmpl                      game
-     00004492  _num_tmpl                          game
-     000044A0  _manGameCreateFromTemplate         game
-     000044C3  _manGameCreateEnemy                game
-     00004502  _manGameInit                       game
-     000045B0  _manGamePlay                       game
-     000045C1  _sysAIBehaviorLeftRight            ai
-     000045F9  _sysAIBehaviorMotherShip           ai
-     00004612  _sysAIUpdateEntity                 ai
-     00004631  _sysAIUpdate                       ai
-     0000463F  _sysAnimationUpdateEntity          animation
-     000046BE  _sysAnimationUpdate                animation
-     000046CC  _sysPhysicsCheckKeyboard           physics
-     000046F6  _sysPhysicsUpdateEntity            physics
-     0000472C  _sysPhysicsUpdate                  physics
-     0000473A  _sysRenderInit                     render
-     00004764  _sysRenderUpdateEntity             render
-     000047B8  _sysRenderLine                     render
-     000047F2  _sysRenderUpdate                   render
-     00004803  _cpct_setPalette                   cpct_video
+     0000435C  _main_palette                      main_palette
+     0000436C  _main                              main
+     00004372  _animEnemy01                       animation
+     0000437B  _manEntityInit                     entity
+     0000439D  _manEntityCreate                   entity
+     000043AE  _manEntityForAll                   entity
+     000043CB  _manEntityForAllMatching           entity
+     000043F8  _manEntityDestroy                  entity
+     00004436  _manEntityDelete                   entity
+     0000443F  _manEntityUpdate                   entity
+     00004457  _manEntityAvailable                entity
+     0000446C  _wait                              game
+     0000447E  _nave_nodriza_tmpl                 game
+     0000448E  _enemy01_tmpl                      game
+     0000449E  _nave_vidas_tmpl                   game
+     000044AE  _jugador_tmpl                      game
+     000044BE  _num_tmpl                          game
+     000044CE  _manGameCreateFromTemplate         game
+     000044F1  _manGameCreateEnemy                game
+     00004530  _manGameInit                       game
+     000045E1  _manGamePlay                       game
+     000045F2  _sysAIBehaviorLeftRight            ai
+     0000462A  _sysAIBehaviorMotherShip           ai
+     00004670  _sysAIInit                         ai
+     00004676  _sysAIUpdateEntity                 ai
+     00004695  _sysAIUpdate                       ai
+     000046A3  _sysAnimationUpdateEntity          animation
+     00004722  _sysAnimationUpdate                animation
+     00004730  _sysPhysicsCheckKeyboard           physics
+     0000475A  _sysPhysicsUpdateEntity            physics
+     000047B6  _sysPhysicsUpDown                  physics
+     000047D2  _sysPhysicsUpdate                  physics
+     000047E0  _sysRenderInit                     render
+     0000480A  _sysRenderUpdateEntity             render
+     0000485E  _sysRenderLine                     render
 ASxxxx Linker V03.00 + NoICE + sdld,  page 3.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_CODE                               00004000    00000A84 =        2692. bytes (REL,CON)
+_CODE                               00004000    00000B2A =        2858. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     0000481A  _cpct_isKeyPressed                 cpct_keyboard
-     0000481A  cpct_isKeyPressed_asm              cpct_keyboard
-     00004826  _cpct_scanKeyboard_f               cpct_keyboard
-     00004826  cpct_scanKeyboard_f_asm            cpct_keyboard
-     00004890  _cpct_setPALColour                 cpct_video
-     0000489C  _cpct_drawSprite                   cpct_sprites
-     00004941  _cpct_keyboardStatusBuffer         cpct_keyboard
-     0000494B  _cpct_waitHalts                    cpct_memutils
-     00004950  ___sdcc_call_hl                    
-     00004951  _cpct_setVideoMode                 cpct_video
-     0000495F  _cpct_waitVSYNC                    cpct_video
-     0000495F  cpct_waitVSYNC_asm                 cpct_video
-     00004967  _cpct_px2byteM0                    cpct_sprites
-     00004983  _cpct_memcpy                       cpct_memutils
-     0000498B  _cpct_memset                       cpct_memutils
-     00004999  _cpct_disableFirmware              cpct_firmware
-     00004999  _cpct_removeInterruptHandler       cpct_firmware
-     00004999  cpct_disableFirmware_asm           cpct_firmware
-     00004999  cpct_removeInterruptHandler_asm    cpct_firmware
-     000049A9  _cpct_drawSolidBox                 cpct_sprites
-     00004A53  _cpct_mode_rom_status              cpct_firmware
-     00004A54  _cpct_getScreenPtr                 cpct_video
-     00004A74  dc_mode0_ct                        cpct_strings
-
+     00004898  _sysRenderUpdate                   render
+     000048A9  _cpct_setPalette                   cpct_video
+     000048C0  _cpct_isKeyPressed                 cpct_keyboard
+     000048C0  cpct_isKeyPressed_asm              cpct_keyboard
+     000048CC  _cpct_scanKeyboard_f               cpct_keyboard
+     000048CC  cpct_scanKeyboard_f_asm            cpct_keyboard
+     00004936  _cpct_setPALColour                 cpct_video
+     00004942  _cpct_drawSprite                   cpct_sprites
+     000049E7  _cpct_keyboardStatusBuffer         cpct_keyboard
+     000049F1  _cpct_waitHalts                    cpct_memutils
+     000049F6  ___sdcc_call_hl                    
+     000049F7  _cpct_setVideoMode                 cpct_video
+     00004A05  _cpct_waitVSYNC                    cpct_video
+     00004A05  cpct_waitVSYNC_asm                 cpct_video
+     00004A0D  _cpct_px2byteM0                    cpct_sprites
+     00004A29  _cpct_memcpy                       cpct_memutils
+     00004A31  _cpct_memset                       cpct_memutils
+     00004A3F  _cpct_disableFirmware              cpct_firmware
+     00004A3F  _cpct_removeInterruptHandler       cpct_firmware
+     00004A3F  cpct_disableFirmware_asm           cpct_firmware
+     00004A3F  cpct_removeInterruptHandler_asm    cpct_firmware
+     00004A4F  _cpct_drawSolidBox                 cpct_sprites
+     00004AF9  _cpct_mode_rom_status              cpct_firmware
+     00004AFA  _cpct_getScreenPtr                 cpct_video
+     00004B1A  dc_mode0_ct                        cpct_strings
 ASxxxx Linker V03.00 + NoICE + sdld,  page 4.
 Hexadecimal  [32-Bits]
 
 Area                                    Addr        Size        Decimal Bytes (Attributes)
 --------------------------------        ----        ----        ------- ----- ------------
-_DATA                               00004A84    000000AE =         174. bytes (REL,CON)
+_DATA                               00004B2A    000000C7 =         199. bytes (REL,CON)
 
       Value  Global                              Global Defined In Module
       -----  --------------------------------   ------------------------
-     00004A84  _m_entities                        entity
-     00004B2C  _m_invalid                         entity
-     00004B2D  _m_next_free                       entity
-     00004B2F  _m_entities_end                    entity
-     00004B31  _enemy_on_lane                     game
-
+     00004B2A  _m_entities                        entity
+     00004BEA  _m_invalid                         entity
+     00004BEB  _m_next_free                       entity
+     00004BED  _m_entities_end                    entity
+     00004BEF  _enemy_on_lane                     game
+     00004BF0  _updown                            ai
 ASxxxx Linker V03.00 + NoICE + sdld,  page 5.
 
 Files Linked                              [ module(s) ]

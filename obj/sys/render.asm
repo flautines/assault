@@ -121,23 +121,23 @@ _sysRenderUpdateEntity::
 	push	bc
 	pop	iy
 	ld	a, 4 (iy)
-	ld	-2 (ix), a
+	ld	-1 (ix), a
 ;src/sys/render.c:30: render_e->w, 
 	push	bc
 	pop	iy
 	ld	a, 3 (iy)
-	ld	-1 (ix), a
+	ld	-2 (ix), a
 ;src/sys/render.c:29: pvmem, 
 ;src/sys/render.c:28: render_e->sprite, 
 	ld	l, c
 	ld	h, b
-	ld	bc, #0x0007
+	ld	bc, #0x0008
 	add	hl, bc
 	ld	c, (hl)
 	inc	hl
 	ld	b, (hl)
-	ld	h, -2 (ix)
-	ld	l, -1 (ix)
+	ld	h, -1 (ix)
+	ld	l, -2 (ix)
 	push	hl
 	push	de
 	push	bc

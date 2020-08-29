@@ -12,16 +12,26 @@ void sysPhysicsCheckKeyboard(Entity_t *e)
 }
 /**************************************/
 void sysPhysicsUpdateEntity(Entity_t *e) {
-  
+    u8 current_frame = e->current_frame;
+    u8 move_counter = e->move_counter;
     if (e->type & E_TYPE_INPUT)
         sysPhysicsCheckKeyboard(e);
+    
+    if ( (current_frame & move_counter) == 0 )
     {
-    i8 vx= e->vx;
-    e->x += vx;  
-    e->y += e->vy;
+        i8 vx= e->vx;
+        e->x += vx;  
+        e->y += e->vy;
     }
+    ++current_frame;
+    e->current_frame = current_frame;
 }
-
+/**************************************/
+void sysPhysicsUpDown(Entity_t *e, u8 up)
+{
+    e->vy = up ? -1 : 1;
+}
+/**************************************/
 void sysPhysicsUpdate() 
 {
   manEntityForAllMatching (

@@ -4,7 +4,7 @@
 
 #include <types.h>
 #define SPR_NAVE_NODRIZA_W 18
-#define SPR_NAVE_NODRIZA_H 16
-extern const u8 spr_nave_nodriza[18 * 16];
+#define SPR_NAVE_NODRIZA_H 18
+extern const u8 spr_nave_nodriza[18 * 18];
 
 #endif
