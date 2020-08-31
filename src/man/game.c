@@ -1,7 +1,6 @@
 #include "game.h"
 #include <man/entity.h>
 #include <man/entity_templates.h>
-//#include <man/animation.h>
 #include <sys/physics.h>
 #include <sys/render.h>
 #include <sys/ai.h>
