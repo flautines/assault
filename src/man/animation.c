@@ -4,7 +4,7 @@
 
 
 AnimFrame_t const animEnemy01[] = {
-    { 12, { .sprite = spr_enemigo_01_0} }
-,   { 12, { .sprite = spr_enemigo_01_1} }
+    { ANIM_COUNTER_ENEMY_01, { .sprite = spr_enemigo_01_0} }
+,   { ANIM_COUNTER_ENEMY_01, { .sprite = spr_enemigo_01_1} }
 ,   {  0, { .next   = animEnemy01  } }
 };

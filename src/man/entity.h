@@ -1,19 +1,6 @@
 #pragma once
 #include <cpctelera.h>
-
-typedef struct AnimFrame AnimFrame_t;
-typedef union SpriteOrNextFrame SpriteOrNextFrame_t;
-
-union SpriteOrNextFrame {
-    u8          *sprite;
-    AnimFrame_t *next;
-};
-
-struct AnimFrame {
-    u8                  time;   // In frames
-    SpriteOrNextFrame_t val;    // Sprite for this frame or 
-                                // ptr to start of animation.
-};
+#include <man/animation.h>
 
 enum {
     E_TYPE_INVALID = 0x00,

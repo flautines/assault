@@ -9,7 +9,7 @@
 
 
 /*------------------------------------*/
-const Entity_t nave_nodriza_tmpl = {
+Entity_t const nave_nodriza_tmpl = {
   E_TYPE_MOVABLE | E_TYPE_RENDER |  // type
   E_TYPE_AI,
   38, 18,                           // x, y   
@@ -21,19 +21,20 @@ const Entity_t nave_nodriza_tmpl = {
   0x0000, 0,                        // anim, anim_counter
   0,                                // current_frame  
 };
-const Entity_t enemy01_tmpl = {
+Entity_t const enemy01_tmpl = {
   E_TYPE_MOVABLE | E_TYPE_RENDER |  // type
   E_TYPE_AI | E_TYPE_ANIM,  
   0, 18+SPR_NAVE_NODRIZA_H+14,      // x, y
-  SPR_ENEMIGO_01_0_H,               // w
+  SPR_ENEMIGO_01_0_W,               // w
   SPR_ENEMIGO_01_0_H,               // h
   -1, 0,  1,                        // vx, vy, move_counter
-  spr_enemigo_01_0,                 // sprite
-  sysAIBehaviorLeftRight,           // ai_behavior
-  animEnemy01, 12,                  // anim, anim_counter
+  spr_enemigo_01_0,                 
+  sysAIBehaviorLeftRight,           
+  animEnemy01,                      
+  ANIM_COUNTER_ENEMY_01,            
   0,                                // current_frame
 };
-const Entity_t nave_vidas_tmpl = {
+Entity_t const nave_vidas_tmpl = {
   E_TYPE_RENDER,                    // type           
   0, 192,                           // x, y
   SPR_NAVE_JUGADOR_1_W,             // w
@@ -44,7 +45,7 @@ const Entity_t nave_vidas_tmpl = {
   0x0000, 0,                        // anim, anim_counter
   0,                                // current_frame
 };
-const Entity_t jugador_tmpl = {
+Entity_t const jugador_tmpl = {
   E_TYPE_MOVABLE | E_TYPE_INPUT |   // type
   E_TYPE_RENDER,                    
   38, 176,                          // x, y
@@ -56,7 +57,7 @@ const Entity_t jugador_tmpl = {
   0x0000, 0 ,                       // anim, anim_counter
   0,                                // current_frame
 };
-const Entity_t num_tmpl = {
+Entity_t const num_tmpl = {
   E_TYPE_RENDER,                    // type
   24, 0,                            // x, y
   SPR_NUMEROS_00_W,                 // w
