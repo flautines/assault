@@ -21,6 +21,12 @@ Entity_t *manEntityCreate() {
   return next;
 }
 /**************************************/
+Entity_t *manEntityClone(Entity_t *e_src) {
+  Entity_t *e_clone = manEntityCreate();
+  cpct_memcpy(e_clone, e_src, sizeof(Entity_t));
+  return e_clone;
+}
+/**************************************/
 void manEntityForAll(UpdateEntityFn_t fnUpdateEntity) {
   Entity_t *e = m_entities;
   while (e->type != E_TYPE_INVALID) {

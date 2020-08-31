@@ -1,3 +1,4 @@
+#include <man/entity_templates.h>
 #include <man/entity.h>
 #include <man/animation.h>
 #include <sys/ai.h>
@@ -7,12 +8,12 @@
 #include <sprites/numeros.h>
 #include <sprites/enemigo_01.h>
 
-
 /*------------------------------------*/
 Entity_t const nave_nodriza_tmpl = {
   E_TYPE_MOVABLE | E_TYPE_RENDER |  // type
   E_TYPE_AI,
-  38, 18,                           // x, y   
+  38,                               // x
+  MOTHERSHIP_Y,                          // y   
   SPR_NAVE_NODRIZA_W,               // w         
   SPR_NAVE_NODRIZA_H,               // h         
   -1,  0,  1,                       // vx, vy, move_counter                                
@@ -24,12 +25,13 @@ Entity_t const nave_nodriza_tmpl = {
 Entity_t const enemy01_tmpl = {
   E_TYPE_MOVABLE | E_TYPE_RENDER |  // type
   E_TYPE_AI | E_TYPE_ANIM,  
-  0, 18+SPR_NAVE_NODRIZA_H+14,      // x, y
+  0,                                // x
+  LANE2_Y,                          // y
   SPR_ENEMIGO_01_0_W,               // w
   SPR_ENEMIGO_01_0_H,               // h
   -1, 0,  1,                        // vx, vy, move_counter
   spr_enemigo_01_0,                 
-  sysAIBehaviorLeftRight,           
+  sysAIBehaviorEnemy01,           
   animEnemy01,                      
   ANIM_COUNTER_ENEMY_01,            
   0,                                // current_frame

@@ -33,6 +33,7 @@ struct _Entity_t {
 
 void      manEntityInit();
 Entity_t *manEntityCreate();
+Entity_t *manEntityClone(Entity_t *e_src);
 void      manEntityForAll(UpdateEntityFn_t fnUpdateEntity);
 void      manEntityForAllMatching(UpdateEntityFn_t fnUpdateEntity, u8 signature);
 void      manEntityDelete(Entity_t *e);

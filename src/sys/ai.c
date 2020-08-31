@@ -12,9 +12,10 @@ void sysAIBehaviorLeftRight(Entity_t *e)
   if (e->x == 0)      e->vx =  1;
   if (e->x == rbound) e->vx = -1;
 }
+/**************************************/
 void sysAIBehaviorMotherShip(Entity_t *e)
 {
-  if (e->x == 20) {
+  if (e->x == 23) {
     manGameCreateEnemy (e);
   }
 
@@ -26,7 +27,14 @@ void sysAIBehaviorMotherShip(Entity_t *e)
   sysAIBehaviorLeftRight(e);
   
 }
-
+/**************************************/
+void sysAIBehaviorEnemy01(Entity_t *e)
+{
+  if ( (e->x & 7) == 0 ) {
+    manGameEnemyLaneDown(e);
+  }
+  sysAIBehaviorLeftRight(e); 
+}
 /**************************************/
 void sysAIInit()
 {

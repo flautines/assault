@@ -18,17 +18,15 @@ void sysRenderInit() {
 /**************************************/
 void sysRenderUpdateEntity(Entity_t *e) {
   Entity_t *render_e  = e;
-   
-  if (!(render_e->type & E_TYPE_DEAD)) {
-    u8 *pvmem = 
-    cpct_getScreenPtr(
-        CPCT_VMEM_START, 
-        render_e->x, render_e->y);
-    cpct_drawSprite (
-        render_e->sprite, 
-        pvmem, 
-        render_e->w, 
-        render_e->h);
+  u8 *pvmem = cpct_getScreenPtr(CPCT_VMEM_START, render_e->x, render_e->y);
+
+  // Entidad viva
+  if (!(render_e->type & E_TYPE_DEAD)) {    
+    cpct_drawSprite (render_e->sprite, pvmem, render_e->w, render_e->h);
+  }
+  // Entidad muerta
+  else {
+    cpct_drawSolidBox(pvmem, 0x0000, e->w, e->h);
   }
 }
 /**************************************/
@@ -39,7 +37,7 @@ void sysRenderLine(u8 *pvmem) {
 }
 /**************************************/
 void sysRenderUpdate() {  
-  cpct_waitVSYNC();  
+  //cpct_waitVSYNC();  
   manEntityForAllMatching (
       sysRenderUpdateEntity, 
       E_TYPE_RENDER);

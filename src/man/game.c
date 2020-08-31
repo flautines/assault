@@ -6,7 +6,8 @@
 #include <sys/ai.h>
 #include <sys/animation.h>
 
-u8 enemy_on_lane;
+// is there an enemy on that lane? (1 yes, 0 no)
+u8 m_lane_status[3];  
 
 /*------------------------------------
 const Entity_t nave_nodriza_tmpl = {
@@ -86,7 +87,7 @@ Entity_t *manGameCreateFromTemplate(const Entity_t *tmpl)
 /**************************************/
 void manGameCreateEnemy(Entity_t *e)
 {
-  if (enemy_on_lane) return;
+  if (m_lane_status[2] != 0) return;
 
   // Create minion
   {
@@ -96,7 +97,7 @@ void manGameCreateEnemy(Entity_t *e)
   }
 
   // Mark enemy is on lane
-  enemy_on_lane = 1;
+  m_lane_status[2] = 1;
 }
 /**************************************/
 void manGameInit()
@@ -108,7 +109,7 @@ void manGameInit()
   // Nave nodriza  
   manGameCreateFromTemplate (&nave_nodriza_tmpl);
 
-  enemy_on_lane = 0;
+  cpct_memset (m_lane_status, 0, sizeof(m_lane_status));
 
   // Vidas
   {
@@ -124,6 +125,7 @@ void manGameInit()
   manGameCreateFromTemplate(&jugador_tmpl);
 
   // Puntuacion
+  /*
   {
     Entity_t num;
     u8 d = 6;
@@ -136,7 +138,8 @@ void manGameInit()
  
     } while (d);
     
-  }  
+  } 
+  */ 
 }
 /**************************************/
 void manGamePlay()
@@ -145,7 +148,29 @@ void manGamePlay()
     sysAIUpdate();
     sysPhysicsUpdate();
     sysAnimationUpdate();
+    wait(5);
     sysRenderUpdate();
     manEntityUpdate();
   }
+}
+/**************************************/
+void manGameEnemyLaneDown(Entity_t *e)
+{
+  u8 lane = 2;
+  if ( e->y > LANE1_Y ) return;
+  else if ( e->y > LANE2_Y ) lane = 1;
+
+  // Check lane empty first
+  if ( m_lane_status[lane-1] ) return;
+
+  // Create phantom entity to erase trail
+  {
+    Entity_t *e_trail = manEntityClone(e);
+    e_trail->type = E_TYPE_RENDER;
+    manEntityDelete(e_trail);
+  }
+  // Go down
+  e->y += LANE_DY;
+  m_lane_status[lane  ] = 0;
+  m_lane_status[lane-1] = 1;
 }
