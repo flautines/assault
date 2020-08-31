@@ -1,15 +1,14 @@
-#include "game.h"
 #include <man/entity.h>
-#include <man/entity_templates.h>
-//#include <man/animation.h>
-#include <sys/physics.h>
-#include <sys/render.h>
+#include <man/animation.h>
 #include <sys/ai.h>
 #include <sys/animation.h>
+#include <sprites/nave_nodriza_01.h>
+#include <sprites/nave_jugador.h>
+#include <sprites/numeros.h>
+#include <sprites/enemigo_01.h>
 
-u8 enemy_on_lane;
 
-/*------------------------------------
+/*------------------------------------*/
 const Entity_t nave_nodriza_tmpl = {
   E_TYPE_MOVABLE | E_TYPE_RENDER |  // type
   E_TYPE_AI,
@@ -68,85 +67,3 @@ const Entity_t num_tmpl = {
   0x0000, 0,                        // anim, anim_counter
   0,                                // current_frame
 };
-*/
-/**************************************/
-void wait(u8 n)
-{
-  do {
-      cpct_waitHalts(n);
-      cpct_waitVSYNC();
-  } while (--n);
-}
-/**************************************/
-Entity_t *manGameCreateFromTemplate(const Entity_t *tmpl)
-{
-  Entity_t *e = manEntityCreate();
-  cpct_memcpy (e, tmpl, sizeof (Entity_t));
-  return e;    
-}
-/**************************************/
-void manGameCreateEnemy(Entity_t *e)
-{
-  if (enemy_on_lane) return;
-
-  // Create minion
-  {
-    Entity_t *minion = manGameCreateFromTemplate (&enemy01_tmpl);
-    minion->x = e->x+4;
-    minion->vx = e->vx;
-  }
-
-  // Mark enemy is on lane
-  enemy_on_lane = 1;
-}
-/**************************************/
-void manGameInit()
-{
-  manEntityInit();
-  sysRenderInit();
-  sysAIInit();
-
-  // Nave nodriza  
-  manGameCreateFromTemplate (&nave_nodriza_tmpl);
-
-  enemy_on_lane = 0;
-
-  // Vidas
-  {
-  u8 x = 30;
-  do {
-      Entity_t *e = 
-        manGameCreateFromTemplate (&nave_vidas_tmpl);
-      x -= 10;
-      e->x = x;
-  } while (x);
-  }
-
-  manGameCreateFromTemplate(&jugador_tmpl);
-
-  // Puntuacion
-  {
-    Entity_t num;
-    u8 d = 6;
-    do {
-      --d;        
-      cpct_memcpy(&num, &num_tmpl, sizeof(Entity_t));      
-      num.sprite += d * SPR_NUMEROS_00_H * SPR_NUMEROS_00_W;
-      num.x += d * (SPR_NUMEROS_00_W+2);
-      manGameCreateFromTemplate(&num);
- 
-    } while (d);
-    
-  }  
-}
-/**************************************/
-void manGamePlay()
-{
-  while (1) {
-    sysAIUpdate();
-    sysPhysicsUpdate();
-    sysAnimationUpdate();
-    sysRenderUpdate();
-    manEntityUpdate();
-  }
-}

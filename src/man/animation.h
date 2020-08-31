@@ -1,3 +1,3 @@
 #pragma once
 
-extern const AnimFrame_t animEnemy01[];
+extern AnimFrame_t const animEnemy01[];
