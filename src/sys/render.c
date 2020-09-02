@@ -40,5 +40,5 @@ void sysRenderUpdate() {
   //cpct_waitVSYNC();  
   manEntityForAllMatching (
       sysRenderUpdateEntity, 
-      E_TYPE_RENDER);
+      E_COMPONENT_RENDER);
 }

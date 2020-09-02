@@ -15,10 +15,11 @@ void manEntityInit() {
 }
 /**************************************/
 Entity_t *manEntityCreate() {
-  Entity_t *next = m_next_free;
-  m_next_free = next + 1;
-  next->type = E_TYPE_DEFAULT;
-  return next;
+  Entity_t *e = m_next_free;
+  m_next_free = e + 1;
+  e->type       = E_TYPE_DEFAULT;
+  e->components = E_COMPONENT_DEFAULT;
+  return e;
 }
 /**************************************/
 Entity_t *manEntityClone(Entity_t *e_src) {
@@ -40,7 +41,7 @@ void manEntityForAllMatching(
 {
   Entity_t *e = m_entities;  
   while (e->type != E_TYPE_INVALID) {
-    if ((e->type & signature) == signature)
+    if ((e->components & signature) == signature)
       fnUpdateEntity(e);
     e++;
   }

@@ -18,5 +18,5 @@ void sysAnimationUpdateEntity(Entity_t *e)
 
 void sysAnimationUpdate()
 {
-    manEntityForAllMatching (sysAnimationUpdateEntity, E_TYPE_ANIM);
+    manEntityForAllMatching (sysAnimationUpdateEntity, E_COMPONENT_ANIM);
 }

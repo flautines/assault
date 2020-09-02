@@ -2,15 +2,26 @@
 #include <cpctelera.h>
 #include <man/animation.h>
 
-enum {
-    E_TYPE_INVALID = 0x00,
-    E_TYPE_RENDER  = 0x01,
-    E_TYPE_MOVABLE = 0x02,
-    E_TYPE_INPUT   = 0x04,
-    E_TYPE_AI      = 0x08,
-    E_TYPE_ANIM    = 0x10,
-    E_TYPE_DEAD    = 0x80,
-    E_TYPE_DEFAULT = 0x7F,  
+enum Type_t {
+    E_TYPE_INVALID      = 0x00,
+    E_TYPE_PLAYER       = 0x01,
+    E_TYPE_ENEMY        = 0x02,
+    E_TYPE_MOTHERSHIP   = 0x04,
+    E_TYPE_SHOT         = 0x08,
+    E_TYPE_DEAD         = 0x80,
+    E_TYPE_DEFAULT      = E_TYPE_ENEMY,
+};
+
+enum Component_t {
+    E_COMPONENT_RENDER  = 0x01,
+    E_COMPONENT_MOVABLE = 0x02,
+    E_COMPONENT_INPUT   = 0x04,
+    E_COMPONENT_AI      = 0x08,
+    E_COMPONENT_ANIM    = 0x10,
+    E_COMPONENT_DEFAULT = 0x00,
+};
+
+enum Limits_t {
     MAX_ENTITIES   = 12,
 };
 
@@ -20,12 +31,14 @@ typedef void (*UpdateEntityFn_t)(Entity_t*);
 
 struct _Entity_t {
     u8                  type;
+    u8                  components;
     u8                  x, y;
     u8                  w, h;
     i8                  vx, vy;
     u8                  move_counter;
     u8 const            *sprite;
     AiBehaviorFn_t      ai_behavior;
+    u8                  ai_counter;
     AnimFrame_t const   *anim;
     u8                  anim_counter;
     u8                  current_frame;

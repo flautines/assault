@@ -36,6 +36,13 @@ void sysAIBehaviorEnemy01(Entity_t *e)
   sysAIBehaviorLeftRight(e); 
 }
 /**************************************/
+void sysAIBehaviorAutoDestroy(Entity_t *e)
+{
+  if ( --(e->ai_counter) == 0 ) {
+    manGameEntityDestroy(e);
+  }
+}
+/**************************************/
 void sysAIInit()
 {
   updown = 0;
@@ -50,5 +57,5 @@ void sysAIUpdate()
 {
   manEntityForAllMatching(
       sysAIUpdateEntity, 
-      E_TYPE_MOVABLE | E_TYPE_AI);
+      E_COMPONENT_MOVABLE | E_COMPONENT_AI);
 }

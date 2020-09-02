@@ -6,13 +6,13 @@
 #include <sys/ai.h>
 #include <sys/animation.h>
 
-// is there an enemy on that lane? (1 yes, 0 no)
 u8 m_lane_status[3];  
+u8 m_player_shot;
 
 /*------------------------------------
 const Entity_t nave_nodriza_tmpl = {
-  E_TYPE_MOVABLE | E_TYPE_RENDER |  // type
-  E_TYPE_AI,
+  E_COMPONENT_MOVABLE | E_COMPONENT_RENDER |  // type
+  E_COMPONENT_AI,
   38, 18,                           // x, y   
   SPR_NAVE_NODRIZA_W,               // w         
   SPR_NAVE_NODRIZA_H,               // h         
@@ -23,8 +23,8 @@ const Entity_t nave_nodriza_tmpl = {
   0,                                // current_frame  
 };
 const Entity_t enemy01_tmpl = {
-  E_TYPE_MOVABLE | E_TYPE_RENDER |  // type
-  E_TYPE_AI | E_TYPE_ANIM,  
+  E_COMPONENT_MOVABLE | E_COMPONENT_RENDER |  // type
+  E_COMPONENT_AI | E_COMPONENT_ANIM,  
   0, 18+SPR_NAVE_NODRIZA_H+14,      // x, y
   SPR_ENEMIGO_01_0_H,               // w
   SPR_ENEMIGO_01_0_H,               // h
@@ -35,7 +35,7 @@ const Entity_t enemy01_tmpl = {
   0,                                // current_frame
 };
 const Entity_t nave_vidas_tmpl = {
-  E_TYPE_RENDER,                    // type           
+  E_COMPONENT_RENDER,                    // type           
   0, 192,                           // x, y
   SPR_NAVE_JUGADOR_1_W,             // w
   SPR_NAVE_JUGADOR_1_H,             // h
@@ -46,8 +46,8 @@ const Entity_t nave_vidas_tmpl = {
   0,                                // current_frame
 };
 const Entity_t jugador_tmpl = {
-  E_TYPE_MOVABLE | E_TYPE_INPUT |   // type
-  E_TYPE_RENDER,                    
+  E_COMPONENT_MOVABLE | E_COMPONENT_INPUT |   // type
+  E_COMPONENT_RENDER,                    
   38, 176,                          // x, y
   SPR_NAVE_JUGADOR_0_W,             // w
   SPR_NAVE_JUGADOR_0_H,             // h
@@ -58,7 +58,7 @@ const Entity_t jugador_tmpl = {
   0,                                // current_frame
 };
 const Entity_t num_tmpl = {
-  E_TYPE_RENDER,                    // type
+  E_COMPONENT_RENDER,                    // type
   24, 0,                            // x, y
   SPR_NUMEROS_00_W,                 // w
   SPR_NUMEROS_00_H,                 // h
@@ -110,8 +110,10 @@ void manGameInit()
   manGameCreateFromTemplate (&nave_nodriza_tmpl);
 
   cpct_memset (m_lane_status, 0, sizeof(m_lane_status));
+  m_player_shot = 0;
 
   // Vidas
+/*  
   {
   u8 x = 30;
   do {
@@ -121,7 +123,7 @@ void manGameInit()
       e->x = x;
   } while (x);
   }
-
+*/
   manGameCreateFromTemplate(&jugador_tmpl);
 
   // Puntuacion
@@ -148,9 +150,10 @@ void manGamePlay()
     sysAIUpdate();
     sysPhysicsUpdate();
     sysAnimationUpdate();
-    wait(5);
+
     sysRenderUpdate();
     manEntityUpdate();
+    wait(5);
   }
 }
 /**************************************/
@@ -166,11 +169,30 @@ void manGameEnemyLaneDown(Entity_t *e)
   // Create phantom entity to erase trail
   {
     Entity_t *e_trail = manEntityClone(e);
-    e_trail->type = E_TYPE_RENDER;
+    e_trail->components = E_COMPONENT_RENDER;
     manEntityDelete(e_trail);
   }
   // Go down
   e->y += LANE_DY;
   m_lane_status[lane  ] = 0;
   m_lane_status[lane-1] = 1;
+}
+/**************************************/
+void manGameEntityDestroy(Entity_t *e)
+{
+  if (e->type == E_TYPE_SHOT) 
+    m_player_shot = 0;  
+  manEntityDelete(e);
+}
+/**************************************/
+void manGamePlayerShot(Entity_t *player)
+{
+  // We can't shoot more than one bullet at a time
+  if (m_player_shot != 0) return;
+
+  {
+    Entity_t *shot = manGameCreateFromTemplate(&player_shot_tmpl);
+    shot->x = player->x + 2;
+  } 
+  m_player_shot = 1;
 }
