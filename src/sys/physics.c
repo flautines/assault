@@ -19,6 +19,7 @@ void sysPhysicsCheckKeyboard(Entity_t *e)
 void sysPhysicsUpdateEntity(Entity_t *e) {
     u8 current_frame = e->current_frame;
     u8 move_counter = e->move_counter;
+    
     if (e->components & E_COMPONENT_INPUT)
         sysPhysicsCheckKeyboard(e);
     

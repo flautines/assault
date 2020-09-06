@@ -2,11 +2,13 @@
 #include <man/game.h>
 #include "collisions.h"
 
+/////////////////////////////////////////////////////////////////////////////
 int overlapping(u8 minA, u8 maxA, u8 minB, u8 maxB)
 {
     return minB <= maxA && minA <= maxB;
 }
 
+/////////////////////////////////////////////////////////////////////////////
 int aabb_collide(Entity_t *e1, Entity_t *e2)
 {
     u8 aLeft = e1->x;
@@ -23,6 +25,7 @@ int aabb_collide(Entity_t *e1, Entity_t *e2)
         && overlapping(aTop, aBottom, bTop, bBottom);
 }
 
+/////////////////////////////////////////////////////////////////////////////
 void sysCollisionsUpdateEntityPairs(Entity_t *e1, Entity_t *e2)
 {
     u8 e1_collides_with_e2 = e1->collides_with & e2->type;
@@ -41,6 +44,7 @@ void sysCollisionsUpdateEntityPairs(Entity_t *e1, Entity_t *e2)
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////
 void sysCollisionsUpdate()
 {
     manEntityForAllPairsMatching(

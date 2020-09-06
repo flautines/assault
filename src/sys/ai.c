@@ -15,11 +15,10 @@ void sysAIBehaviorLeftRight(Entity_t *e)
 /**************************************/
 void sysAIBehaviorMotherShip(Entity_t *e)
 {
-  if (e->x == 23) {
+  if ( (e->x & 7) == 0 ) {
     manGameCreateEnemy (e);
   }
 
-  // Every 16 frames go up or down
   if ( (e->current_frame&15) == 0 ) {
     sysPhysicsUpDown(e, updown);
     updown ^= 1;
@@ -28,11 +27,22 @@ void sysAIBehaviorMotherShip(Entity_t *e)
   
 }
 /**************************************/
+void sysAIBehaviorChangeDir(Entity_t *e)
+{  
+  if (cpct_rand() < 20) {
+    e->vx = -(e->vx);
+  }
+}
+
 void sysAIBehaviorEnemy01(Entity_t *e)
 {
   if ( (e->x & 7) == 0 ) {
     manGameEnemyLaneDown(e);
   }
+  if ( (e->x &15)  == 0) {
+    sysAIBehaviorChangeDir(e);
+  }
+
   sysAIBehaviorLeftRight(e); 
 }
 /**************************************/
