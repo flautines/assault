@@ -5,6 +5,7 @@
 #include <sys/render.h>
 #include <sys/ai.h>
 #include <sys/animation.h>
+#include <sys/collisions.h>
 
 u8 m_lane_status[3];  
 u8 m_player_shot;
@@ -69,7 +70,7 @@ const Entity_t num_tmpl = {
   0,                                // current_frame
 };
 */
-/**************************************/
+/////////////////////////////////////////////////////////////////////////////
 void wait(u8 n)
 {
   do {
@@ -77,14 +78,16 @@ void wait(u8 n)
       cpct_waitVSYNC();
   } while (--n);
 }
-/**************************************/
+
+/////////////////////////////////////////////////////////////////////////////
 Entity_t *manGameCreateFromTemplate(const Entity_t *tmpl)
 {
   Entity_t *e = manEntityCreate();
   cpct_memcpy (e, tmpl, sizeof (Entity_t));
   return e;    
 }
-/**************************************/
+
+/////////////////////////////////////////////////////////////////////////////
 void manGameCreateEnemy(Entity_t *e)
 {
   if (m_lane_status[2] != 0) return;
@@ -99,7 +102,8 @@ void manGameCreateEnemy(Entity_t *e)
   // Mark enemy is on lane
   m_lane_status[2] = 1;
 }
-/**************************************/
+
+/////////////////////////////////////////////////////////////////////////////
 void manGameInit()
 {
   manEntityInit();
@@ -143,25 +147,25 @@ void manGameInit()
   } 
   */ 
 }
-/**************************************/
-void manGamePlay()
-{
-  while (1) {
-    sysAIUpdate();
-    sysPhysicsUpdate();
-    sysAnimationUpdate();
 
-    sysRenderUpdate();
-    manEntityUpdate();
-    wait(5);
-  }
+/////////////////////////////////////////////////////////////////////////////
+int manGameGetEnemyLane(Entity_t *e)
+{
+  u8 lane = 2;
+  if ( e->y > LANE1_Y ) lane = 0;
+  else if ( e->y > LANE2_Y ) lane = 1;
+  return lane;
 }
-/**************************************/
+
 void manGameEnemyLaneDown(Entity_t *e)
 {
+  /*
   u8 lane = 2;
   if ( e->y > LANE1_Y ) return;
   else if ( e->y > LANE2_Y ) lane = 1;
+  */
+  u8 lane = manGameGetEnemyLane(e);
+  if (lane == 0) return;
 
   // Check lane empty first
   if ( m_lane_status[lane-1] ) return;
@@ -177,14 +181,23 @@ void manGameEnemyLaneDown(Entity_t *e)
   m_lane_status[lane  ] = 0;
   m_lane_status[lane-1] = 1;
 }
-/**************************************/
+
+/////////////////////////////////////////////////////////////////////////////
 void manGameEntityDestroy(Entity_t *e)
 {
-  if (e->type == E_TYPE_SHOT) 
-    m_player_shot = 0;  
+  if (e->type == E_TYPE_SHOT) {
+    m_player_shot = 0;
+  }
+
+  if (e->type == E_TYPE_ENEMY) {
+    u8 lane = manGameGetEnemyLane(e);
+    m_lane_status[lane] = 0;
+  }
+
   manEntityDelete(e);
 }
-/**************************************/
+
+/////////////////////////////////////////////////////////////////////////////
 void manGamePlayerShot(Entity_t *player)
 {
   // We can't shoot more than one bullet at a time
@@ -195,4 +208,18 @@ void manGamePlayerShot(Entity_t *player)
     shot->x = player->x + 2;
   } 
   m_player_shot = 1;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+void manGamePlay()
+{
+  while (1) {
+    sysAIUpdate();
+    sysPhysicsUpdate();
+    sysAnimationUpdate();
+    sysCollisionsUpdate();
+    sysRenderUpdate();
+    manEntityUpdate();
+    wait(1);
+  }
 }

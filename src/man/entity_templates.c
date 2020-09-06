@@ -24,11 +24,13 @@ Entity_t const nave_nodriza_tmpl = {
   0,
   0x0000, 0,                        // anim, anim_counter
   0,                                // current_frame  
+  0,                                // collides_with
 };
 Entity_t const enemy01_tmpl = {
   E_TYPE_ENEMY,
   E_COMPONENT_MOVABLE | E_COMPONENT_RENDER |  // components
-  E_COMPONENT_AI | E_COMPONENT_ANIM,  
+  E_COMPONENT_AI | E_COMPONENT_ANIM | 
+  E_COMPONENT_COLLIDE, 
   0,                                // x
   LANE2_Y,                          // y
   SPR_ENEMIGO_01_0_W,               // w
@@ -40,8 +42,10 @@ Entity_t const enemy01_tmpl = {
   animEnemy01,                      
   ANIM_COUNTER_ENEMY_01,            
   0,                                // current_frame
+  0,                                // collides_with
 };
 /*
+  TODO: manager de vidas
 Entity_t const nave_vidas_tmpl = {
   E_TYPE_DEFAULT,
   E_COMPONENT_RENDER,                    // components
@@ -53,12 +57,13 @@ Entity_t const nave_vidas_tmpl = {
   0x0000,                           // ai_behavior
   0x0000, 0,                        // anim, anim_counter
   0,                                // current_frame
+  0,                                  // collides_with
 };
 */
 Entity_t const jugador_tmpl = {
   E_TYPE_PLAYER,
   E_COMPONENT_MOVABLE | E_COMPONENT_INPUT |   // components
-  E_COMPONENT_RENDER,                    
+  E_COMPONENT_RENDER | E_COMPONENT_COLLIDE, 
   38,                               // x
   PLAYER_Y,                         // y
   SPR_NAVE_JUGADOR_0_W,             // w
@@ -66,14 +71,15 @@ Entity_t const jugador_tmpl = {
   0,  0,  0,                        // vx, vy, move_counter
   spr_nave_jugador_0,               // sprite
   0x0000,                           // ai_behavior
-  0,
+  0,                                // ai_counter
   0x0000, 0 ,                       // anim, anim_counter
   0,                                // current_frame
+  0,                                // collides_with
 };
 Entity_t const player_shot_tmpl = {
   E_TYPE_SHOT,
   E_COMPONENT_MOVABLE | E_COMPONENT_AI |      // components
-  E_COMPONENT_RENDER,                    
+  E_COMPONENT_RENDER | E_COMPONENT_COLLIDE,
   0,                                // x
   PLAYER_SHOT_Y,                    // y
   SPR_PLAYER_SHOT_W,                // w
@@ -82,16 +88,18 @@ Entity_t const player_shot_tmpl = {
   spr_player_shot,                  // sprite
   sysAIBehaviorAutoDestroy,         // ai_behavior
   16,                               // ai_counter
-  0x0000, 0 ,                       // anim, anim_counter
+  0x0000, 0,                        // anim, anim_counter
   0,                                // current_frame
+  E_TYPE_ENEMY,                     // collides_with
 };
 /*
+  TODO: manager de puntuacion
 Entity_t const num_tmpl = {
   E_TYPE_DEFAULT,
   E_COMPONENT_RENDER,                    // components
   24, 0,                            // x, y
   SPR_NUMEROS_00_W,                 // w
-  SPR_NUMEROS_00_H,                 // h
+  SPR_NUMEROS_00_H,                 // h                                // collides_with
   0,  0,  0,                        // vx, vy
   spr_numeros_00,                   // sprite
   0x0000,                           // ai_behavior
