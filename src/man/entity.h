@@ -12,8 +12,9 @@ enum Type_t {
     E_TYPE_MOTHERSHIP   = 0x04,
     E_TYPE_SHOT         = 0x08,
 	E_TYPE_ENEMY_SHOT	= 0x10,
+	E_TYPE_DECOR      	= 0x40,
     E_TYPE_DEAD         = 0x80,
-    E_TYPE_DEFAULT      = E_TYPE_ENEMY,
+	E_TYPE_DEFAULT		= E_TYPE_DECOR,
 };
 
 enum Component_t {

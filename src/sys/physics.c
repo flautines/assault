@@ -33,10 +33,7 @@ void sysPhysicsUpdateEntity(Entity_t *e) {
     e->current_frame = current_frame;
 }
 /**************************************/
-void sysPhysicsUpDown(Entity_t *e, u8 up)
-{
-    e->vy = up ? -1 : 1;
-}
+
 /**************************************/
 void sysPhysicsUpdate() 
 {

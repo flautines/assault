@@ -9,6 +9,7 @@
 #include <sprites/enemigo_01.h>
 #include <sprites/player_shot.h>
 #include <sprites/enemy_shot.h>
+#include <sprites/spawn_ray.h>
 
 /*------------------------------------*/
 Entity_t const nave_nodriza_tmpl = {
@@ -23,6 +24,21 @@ Entity_t const nave_nodriza_tmpl = {
   spr_nave_nodriza,                 // sprite       
   sysAIBehaviorMotherShip,          // ai_behavior               
   0,
+  0x0000, 0,                        // anim, anim_counter
+  0,                                // current_frame  
+  0,                                // collides_with
+};
+Entity_t const spawn_ray_tmpl = {
+  E_TYPE_DECOR,
+  E_COMPONENT_RENDER | E_COMPONENT_AI, // components
+  43,                               // x
+  MOTHERSHIP_Y-2+SPR_NAVE_NODRIZA_H,	// y   
+  SPR_SPAWN_RAY_W,               	// w         
+  SPR_SPAWN_RAY_H,               	// h         
+   0,  0,  0,                       // vx, vy, move_counter                                
+  spr_spawn_ray,                 	// sprite       
+  sysAIBehaviorAutoDestroy,         // ai_behavior               
+  8,
   0x0000, 0,                        // anim, anim_counter
   0,                                // current_frame  
   0,                                // collides_with

@@ -89,19 +89,32 @@ Entity_t *manGameCreateFromTemplate(const Entity_t *tmpl)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-void manGameCreateEnemy(Entity_t *e)
+int manGameCreateEnemy(Entity_t *e)
 {
-	if (m_lane_status[2] != 0) return;
+	Entity_t *e_spawn;
+	u8 x;
 
+	// No enemy created
+	if (m_lane_status[2] != 0) return 0;
+
+	// Spawn rays
+	e_spawn = manGameCreateFromTemplate(&spawn_ray_tmpl);
+	x = e->x;
+	x += 5;
+	e_spawn->x = x;
 	// Create minion
 	{
-		Entity_t *minion = manGameCreateFromTemplate (&enemy01_tmpl);
-		minion->x = e->x+4;
-		minion->vx = e->vx;
+		e_spawn = manGameCreateFromTemplate (&enemy01_tmpl);
+		x -= 2;
+		e_spawn->x = x;
+		e_spawn->vx = e->vx;
 	}
 
 	// Mark enemy is on lane
 	m_lane_status[2] = 1;
+
+	// Return enemy created
+	return 1;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -238,6 +251,6 @@ void manGamePlay()
 	sysCollisionsUpdate();
 	sysRenderUpdate();
 	manEntityUpdate();
-	wait(1);
+	wait(5);
   }
 }

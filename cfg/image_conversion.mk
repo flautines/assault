@@ -51,6 +51,7 @@ $(eval $(call IMG2SP, CONVERT         , assets/numeros.png, 6, 8, spr_numeros))
 $(eval $(call IMG2SP, CONVERT         , assets/enemigo_01.png, 20, 10, spr_enemigo_01))
 $(eval $(call IMG2SP, CONVERT         , assets/player_shot.png, 2, 8, spr_player_shot))
 $(eval $(call IMG2SP, CONVERT         , assets/enemy_shot.png, 2, 8, spr_enemy_shot))
+$(eval $(call IMG2SP, CONVERT         , assets/spawn_ray.png, 14, 5, spr_spawn_ray))
 
 ##
 ## OLD MACROS (For compatibility)
