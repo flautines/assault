@@ -8,6 +8,7 @@
 #include <sprites/numeros.h>
 #include <sprites/enemigo_01.h>
 #include <sprites/player_shot.h>
+#include <sprites/enemy_shot.h>
 
 /*------------------------------------*/
 Entity_t const nave_nodriza_tmpl = {
@@ -88,6 +89,23 @@ Entity_t const player_shot_tmpl = {
   spr_player_shot,                  // sprite
   sysAIBehaviorAutoDestroy,         // ai_behavior
   16,                               // ai_counter
+  0x0000, 0,                        // anim, anim_counter
+  0,                                // current_frame
+  E_TYPE_ENEMY,                     // collides_with
+};
+
+Entity_t const enemy_shot_tmpl = {
+  E_TYPE_ENEMY_SHOT,
+  E_COMPONENT_MOVABLE | E_COMPONENT_AI |      // components
+  E_COMPONENT_RENDER | E_COMPONENT_COLLIDE,
+  0,                                // x
+  0,                    			// y
+  SPR_ENEMY_SHOT_W,                 // w
+  SPR_ENEMY_SHOT_H,                 // h
+  0,   8,  0,                       // vx, vy, move_counter
+  spr_enemy_shot,                   // sprite
+  sysAIBehaviorEnemyShot,           // ai_behavior
+  0,                                // ai_counter
   0x0000, 0,                        // anim, anim_counter
   0,                                // current_frame
   E_TYPE_ENEMY,                     // collides_with

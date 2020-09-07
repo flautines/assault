@@ -27,10 +27,16 @@ void sysRenderUpdateEntity(Entity_t *e) {
     cpct_drawSolidBox(pvmem, 0x0000, render_e->w, render_e->h);
   }
 
-  // Borrar el rastro del disparo
-  if (render_e->type & E_TYPE_SHOT) {
-    pvmem = cpct_getScreenPtr(pvmem, 0, render_e->h);
-    cpct_drawSolidBox(pvmem, 0x0000, render_e->w, render_e->h);
+	// Borrar el rastro del disparo
+	if (render_e->type & (E_TYPE_SHOT | E_TYPE_ENEMY_SHOT)) {		
+		u8 y = render_e->y;
+		if (render_e->type & E_TYPE_SHOT)
+			y += render_e->h;
+		else
+			y -= render_e->h;
+			
+		pvmem = cpct_getScreenPtr(CPCT_VMEM_START, render_e->x, y);
+    	cpct_drawSolidBox(pvmem, 0x0000, render_e->w, render_e->h);
   }
 }
 

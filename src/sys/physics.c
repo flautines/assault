@@ -13,7 +13,7 @@ void sysPhysicsCheckKeyboard(Entity_t *e)
 
     // Check for shoot action
     if (cpct_isKeyPressed(Key_Space))
-        manGamePlayerShot(e);
+        manGamePlayerShoot(e);
 }
 /**************************************/
 void sysPhysicsUpdateEntity(Entity_t *e) {

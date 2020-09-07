@@ -20,3 +20,4 @@ extern Entity_t const nave_vidas_tmpl;
 extern Entity_t const jugador_tmpl;
 extern Entity_t const num_tmpl;
 extern Entity_t const player_shot_tmpl;
+extern Entity_t const enemy_shot_tmpl;
