@@ -1,6 +1,7 @@
 #include "game.h"
 #include <man/entity.h>
 #include <man/entity_templates.h>
+#include <man/lives.h>
 #include <sys/physics.h>
 #include <sys/render.h>
 #include <sys/ai.h>
@@ -121,6 +122,7 @@ int manGameCreateEnemy(Entity_t *e)
 void manGameInit()
 {
 	manEntityInit();
+	manLivesInit();
 	sysRenderInit();
 	sysAIInit();
 
@@ -132,19 +134,6 @@ void manGameInit()
 
 	manGameCreateFromTemplate(&jugador_tmpl);
 
-	// Vidas
-/*
-	{
-	u8 x = 30;
-	do {
-		Entity_t *e =
-			manGameCreateFromTemplate (&nave_vidas_tmpl);
-		x -= 10;
-		e->x = x;
-	} while (x);
-	}
-*/
-	
   // Puntuacion
   /*
   {
@@ -251,6 +240,7 @@ void manGamePlay()
 	sysCollisionsUpdate();
 	sysRenderUpdate();
 	manEntityUpdate();
+	manLivesUpdate();
 	wait(5);
   }
 }

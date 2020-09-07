@@ -1,7 +1,9 @@
 #include "render.h"
 #include <man/entity.h>
+#include <man/lives.h>
 #include <cpctelera.h>
 #include <sprites/main_palette.h>
+#include <sprites/nave_jugador.h>
 
 void sysRenderLine(u8 *pvmem);
 /////////////////////////////////////////////////////////////////////////////
@@ -48,9 +50,23 @@ void sysRenderLine(u8 *pvmem) {
 }
 
 /////////////////////////////////////////////////////////////////////////////
+void sysRenderLives() {
+	u8 nlives = manLivesGetNumber();
+	u8 *pvmem = cpct_getScreenPtr(CPCT_VMEM_START, LIVES_X, LIVES_Y);
+
+	do {
+		cpct_drawSprite(spr_nave_jugador_1, 
+						pvmem, 
+						SPR_NAVE_JUGADOR_1_W, 
+						SPR_NAVE_JUGADOR_1_H);
+		pvmem += LIVES_GAP;
+	} while (--nlives);
+}
+
+/////////////////////////////////////////////////////////////////////////////
 void sysRenderUpdate() {  
-  //cpct_waitVSYNC();  
-  manEntityForAllMatching (
-      sysRenderUpdateEntity, 
-      E_COMPONENT_RENDER);
+	manEntityForAllMatching (sysRenderUpdateEntity, E_COMPONENT_RENDER);
+	if (manLivesNeedDraw()) {
+		sysRenderLives();
+	}
 }
