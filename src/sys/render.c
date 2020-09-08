@@ -51,8 +51,9 @@ void sysRenderLine(u8 *pvmem) {
 
 /////////////////////////////////////////////////////////////////////////////
 void sysRenderLives() {
-	u8 nlives = manLivesGetNumber();
-	u8 *pvmem = cpct_getScreenPtr(CPCT_VMEM_START, LIVES_X, LIVES_Y);
+	u8 nlives 		= manLivesGetNumber();
+	u8 dead_lives	= manLivesGetMax() - nlives;	
+	u8 *pvmem 		= cpct_getScreenPtr(CPCT_VMEM_START, LIVES_X, LIVES_Y);
 
 	do {
 		cpct_drawSprite(spr_nave_jugador_1, 
@@ -61,6 +62,15 @@ void sysRenderLives() {
 						SPR_NAVE_JUGADOR_1_H);
 		pvmem += LIVES_GAP;
 	} while (--nlives);
+
+	if (dead_lives) {
+		do {
+			cpct_drawSolidBox (pvmem, 
+							   0x0000, 
+							   SPR_NAVE_JUGADOR_1_W, 
+							   SPR_NAVE_JUGADOR_1_H);
+		} while (--dead_lives);
+	}
 }
 
 /////////////////////////////////////////////////////////////////////////////

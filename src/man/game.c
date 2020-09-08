@@ -12,66 +12,6 @@ u8 m_lane_status[3];
 u8 m_player_shot;
 u8 m_enemy_shot;
 
-/*------------------------------------
-const Entity_t nave_nodriza_tmpl = {
-  E_COMPONENT_MOVABLE | E_COMPONENT_RENDER |  // type
-  E_COMPONENT_AI,
-  38, 18,                           // x, y
-  SPR_NAVE_NODRIZA_W,               // w
-  SPR_NAVE_NODRIZA_H,               // h
-  -1,  0,  1,                       // vx, vy, move_counter
-  spr_nave_nodriza,                 // sprite
-  sysAIBehaviorMotherShip,          // ai_behavior
-  0x0000, 0,                        // anim, anim_counter
-  0,                                // current_frame
-};
-const Entity_t enemy01_tmpl = {
-  E_COMPONENT_MOVABLE | E_COMPONENT_RENDER |  // type
-  E_COMPONENT_AI | E_COMPONENT_ANIM,
-  0, 18+SPR_NAVE_NODRIZA_H+14,      // x, y
-  SPR_ENEMIGO_01_0_H,               // w
-  SPR_ENEMIGO_01_0_H,               // h
-  -1, 0,  1,                        // vx, vy, move_counter
-  spr_enemigo_01_0,                 // sprite
-  sysAIBehaviorLeftRight,           // ai_behavior
-  animEnemy01, 12,                  // anim, anim_counter
-  0,                                // current_frame
-};
-const Entity_t nave_vidas_tmpl = {
-  E_COMPONENT_RENDER,                    // type
-  0, 192,                           // x, y
-  SPR_NAVE_JUGADOR_1_W,             // w
-  SPR_NAVE_JUGADOR_1_H,             // h
-  0,  0,  0,                        // vx, vy, move_counter
-  spr_nave_jugador_1,               // sprite
-  0x0000,                           // ai_behavior
-  0x0000, 0,                        // anim, anim_counter
-  0,                                // current_frame
-};
-const Entity_t jugador_tmpl = {
-  E_COMPONENT_MOVABLE | E_COMPONENT_INPUT |   // type
-  E_COMPONENT_RENDER,
-  38, 176,                          // x, y
-  SPR_NAVE_JUGADOR_0_W,             // w
-  SPR_NAVE_JUGADOR_0_H,             // h
-  0,  0,  0,                        // vx, vy, move_counter
-  spr_nave_jugador_0,               // sprite
-  0x0000,                           // ai_behavior
-  0x0000, 0 ,                       // anim, anim_counter
-  0,                                // current_frame
-};
-const Entity_t num_tmpl = {
-  E_COMPONENT_RENDER,                    // type
-  24, 0,                            // x, y
-  SPR_NUMEROS_00_W,                 // w
-  SPR_NUMEROS_00_H,                 // h
-  0,  0,  0,                        // vx, vy
-  spr_numeros_00,                   // sprite
-  0x0000,                           // ai_behavior
-  0x0000, 0,                        // anim, anim_counter
-  0,                                // current_frame
-};
-*/
 /////////////////////////////////////////////////////////////////////////////
 void wait(u8 n)
 {
@@ -197,7 +137,14 @@ void manGameEntityDestroy(Entity_t *e)
 		m_lane_status[lane] = 0;
 	}
 
-	manEntityDelete(e);
+	if (e->type == E_TYPE_PLAYER) {
+		manLivesChange(-1);
+	}
+
+	if (e->type != E_TYPE_PLAYER) {
+		manEntityDelete(e);
+	}
+	
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -241,6 +188,6 @@ void manGamePlay()
 	sysRenderUpdate();
 	manEntityUpdate();
 	manLivesUpdate();
-	wait(5);
+	wait(1);
   }
 }

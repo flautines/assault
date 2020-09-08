@@ -78,7 +78,7 @@ void sysAIBehaviorEnemy01(Entity_t *e)
 /////////////////////////////////////////////////////////////////////////////
 void sysAIBehaviorEnemyShot(Entity_t *e)
 {
-    if ( e->y >= PLAYER_Y-8 ) {
+    if ( e->y >= PLAYER_Y-9) {
         manGameEntityDestroy(e);
     }
 }

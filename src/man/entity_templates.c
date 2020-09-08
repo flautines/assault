@@ -61,22 +61,7 @@ Entity_t const enemy01_tmpl = {
   0,                                // current_frame
   0,                                // collides_with
 };
-/*
-  TODO: manager de vidas
-Entity_t const nave_vidas_tmpl = {
-  E_TYPE_DEFAULT,
-  E_COMPONENT_RENDER,                    // components
-  0, 192,                           // x, y
-  SPR_NAVE_JUGADOR_1_W,             // w
-  SPR_NAVE_JUGADOR_1_H,             // h
-  0,  0,  0,                        // vx, vy, move_counter
-  spr_nave_jugador_1,               // sprite
-  0x0000,                           // ai_behavior
-  0x0000, 0,                        // anim, anim_counter
-  0,                                // current_frame
-  0,                                  // collides_with
-};
-*/
+
 Entity_t const jugador_tmpl = {
   E_TYPE_PLAYER,
   E_COMPONENT_MOVABLE | E_COMPONENT_INPUT |   // components
@@ -124,7 +109,7 @@ Entity_t const enemy_shot_tmpl = {
   0,                                // ai_counter
   0x0000, 0,                        // anim, anim_counter
   0,                                // current_frame
-  E_TYPE_ENEMY,                     // collides_with
+  E_TYPE_PLAYER,                    // collides_with
 };
 /*
   TODO: manager de puntuacion

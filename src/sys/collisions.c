@@ -33,9 +33,11 @@ void sysCollisionsUpdateEntityPairs(Entity_t *e1, Entity_t *e2)
     if (e1_collides_with_e2 || e2_collides_with_e1) {
         
         if ( aabb_collide(e1, e2) ) {
-
             u8 e_type = e1_collides_with_e2 ? e1->type : e2->type;
-            if (e_type & E_TYPE_SHOT) {
+			/*Entity_t *self = e1_collides_with_e2 ? e1 : e2;
+			Entity_t *other = e1_collides_with_e2 ? e2 : e1;*/
+
+            if (e_type & (E_TYPE_SHOT | E_TYPE_ENEMY_SHOT)) {
                 manGameEntityDestroy(e1);
                 manGameEntityDestroy(e2);
             }
